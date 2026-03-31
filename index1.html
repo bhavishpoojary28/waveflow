@@ -7,25 +7,9 @@
   <meta name="theme-color" content="#000000" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <!-- ══════════════════════════════════════════════════════
-       CACHE CONTROL — forces browsers & GitHub Pages CDN
-       to always revalidate this HTML on every normal refresh.
-       Static assets (icons, manifest) are versioned via ?v=
-  ═══════════════════════════════════════════════════════ -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-
-  <!-- ── APP VERSION — bump this on every deploy ────────
-       Format: MAJOR.MINOR.PATCH  e.g. 2.2.1 → 2.2.2
-       All versioned asset URLs below use this same value.
-  ─────────────────────────────────────────────────────── -->
-  <meta name="app-version" content="2.2.0" />
-
   <title>WaveFlow</title>
-  <link rel="manifest" href="./manifest.json?v=2.2.0" />
-  <link rel="apple-touch-icon" href="./icons/icon-192.svg?v=2.2.0" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.svg" />
   <link
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
@@ -3395,91 +3379,14 @@
     let tT;
     function toast(msg) { const el = document.getElementById('toast'); el.textContent = msg; el.classList.add('on'); clearTimeout(tT); tT = setTimeout(() => el.classList.remove('on'), 2200); }
 
-    // ══════════════════════════════════════════════════════════════════
-    //  CACHE-BUSTING — VERSION CHECK & SERVICE WORKER MANAGER
-    //  Ensures users always see the latest WaveFlow on normal refresh.
-    //  No backend needed — works 100% with GitHub Pages.
-    // ══════════════════════════════════════════════════════════════════
-
-    const APP_VERSION = '2.2.0'; // ← bump this on every deploy
-
-    // ── 1. SERVICE WORKER: register with version query so the browser
-    //       fetches a fresh copy of service-worker.js on every deploy.
-    //       If a new SW is found, it activates immediately (skipWaiting)
-    //       and the page reloads once to flush the old cache.
+    // SERVICE WORKER REGISTRATION
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', async () => {
-        try {
-          const reg = await navigator.serviceWorker.register(
-            `./service-worker.js?v=${APP_VERSION}`,
-            { updateViaCache: 'none' }   // never serve SW from HTTP cache
-          );
-
-          // Check for updates every time the page gains focus
-          document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible') reg.update();
-          });
-
-          // When a new SW finishes installing, activate it right away
-          reg.addEventListener('updatefound', () => {
-            const newSW = reg.installing;
-            newSW?.addEventListener('statechange', () => {
-              if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-                newSW.postMessage({ type: 'SKIP_WAITING' });
-              }
-            });
-          });
-
-          // When SW controller changes (new SW took over), reload once
-          let refreshing = false;
-          navigator.serviceWorker.addEventListener('controllerchange', () => {
-            if (!refreshing) { refreshing = true; window.location.reload(); }
-          });
-
-          console.log(`[WaveFlow] SW registered v${APP_VERSION}`);
-        } catch (err) {
-          console.warn('[WaveFlow] SW registration failed:', err);
-        }
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(reg => console.log('Service Worker registered', reg))
+          .catch(err => console.error('Service Worker registration failed:', err));
       });
     }
-
-    // ── 2. VERSION CHECK — stores current version in localStorage.
-    //       On mismatch (= new deploy detected) clears all stale caches
-    //       and does a single silent reload so the user gets fresh HTML.
-    (function checkVersion() {
-      const STORED_VER_KEY = 'wf_app_version';
-      const stored = localStorage.getItem(STORED_VER_KEY);
-
-      if (stored && stored !== APP_VERSION) {
-        console.log(`[WaveFlow] Version changed ${stored} → ${APP_VERSION}. Clearing caches…`);
-
-        // Clear all WaveFlow runtime caches (session cache object)
-        Object.keys(_C).forEach(k => delete _C[k]);
-
-        // Clear browser Cache Storage (SW caches)
-        if ('caches' in window) {
-          caches.keys().then(names => Promise.all(names.map(n => caches.delete(n))));
-        }
-
-        // Save new version then reload fresh (only once)
-        localStorage.setItem(STORED_VER_KEY, APP_VERSION);
-        window.location.reload(true);
-        return;
-      }
-
-      // First visit or same version — just save it
-      localStorage.setItem(STORED_VER_KEY, APP_VERSION);
-    })();
-
-    // ── 3. STALE-PAGE GUARD — if the page was restored from bfcache
-    //       (back/forward navigation) revalidate immediately so stale
-    //       content is never shown from memory.
-    window.addEventListener('pageshow', e => {
-      if (e.persisted) {
-        console.log('[WaveFlow] Page restored from bfcache — reloading.');
-        window.location.reload();
-      }
-    });
   </script>
 </body>
 
