@@ -512,45 +512,6 @@
       flex-shrink: 0;
     }
 
-    .sug-recent-hd {
-      padding: 10px 16px 6px;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: var(--t3);
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-
-    .sug-recent-clear {
-      cursor: pointer;
-      font-size: 11px;
-      color: var(--acc);
-      letter-spacing: 0;
-      font-weight: 700;
-      font-family: var(--FM);
-      text-transform: none;
-      transition: opacity 0.15s;
-    }
-
-    .sug-recent-clear:hover { opacity: 0.75; }
-
-    .si-remove {
-      font-size: 13px;
-      color: var(--t3);
-      padding: 4px 8px;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: all 0.15s;
-      flex-shrink: 0;
-      line-height: 1;
-    }
-
-    .si-remove:hover { color: var(--r); background: rgba(255,62,62,0.1); }
-
     /* CHIPS */
     .chips {
       display: flex;
@@ -2142,7 +2103,7 @@
         <div class="sb-item" id="sbi-trending" onclick="sbNav('trending')"><span class="sb-icon">🔥</span>Trending</div>
         <div class="sb-item" id="sbi-search" onclick="sbNav('search')"><span class="sb-icon">🔍</span>Search</div>
         <div class="sb-item" id="sbi-liked" onclick="sbNav('liked')"><span class="sb-icon">❤️</span>Liked Songs</div>
-        <div class="sb-item" id="sbi-updates" onclick="sbNav('updates')"><span class="sb-icon">🔔</span>Updates</div>
+        <div class="sb-item" id="sbi-queue" onclick="sbNav('queue')"><span class="sb-icon">📋</span>Queue</div>
         <div class="sb-divider"></div>
         <div class="sb-section">Genres</div>
         <div class="sb-item" id="sbi-bollywood" onclick="sbNav('bollywood')"><span class="sb-icon">🎬</span>Bollywood
@@ -2150,7 +2111,6 @@
         <div class="sb-item" id="sbi-punjabi" onclick="sbNav('punjabi')"><span class="sb-icon">🥁</span>Punjabi</div>
         <div class="sb-item" id="sbi-tamil" onclick="sbNav('tamil')"><span class="sb-icon">🎵</span>Tamil</div>
         <div class="sb-item" id="sbi-telugu" onclick="sbNav('telugu')"><span class="sb-icon">🎶</span>Telugu</div>
-        <div class="sb-item" id="sbi-malayalam" onclick="sbNav('malayalam')"><span class="sb-icon">🌴</span>Malayalam</div>
         <div class="sb-item" id="sbi-pop" onclick="sbNav('pop')"><span class="sb-icon">✨</span>Pop</div>
         <div class="sb-item" id="sbi-hiphop" onclick="sbNav('hiphop')"><span class="sb-icon">🎤</span>Hip-Hop</div>
         <div class="sb-item" id="sbi-rock" onclick="sbNav('rock')"><span class="sb-icon">🎸</span>Rock</div>
@@ -2202,7 +2162,6 @@
         <button class="chip" data-tab="punjabi" onclick="switchTab(this)">🥁 Punjabi</button>
         <button class="chip" data-tab="tamil" onclick="switchTab(this)">🎵 Tamil</button>
         <button class="chip" data-tab="telugu" onclick="switchTab(this)">🎶 Telugu</button>
-        <button class="chip" data-tab="malayalam" onclick="switchTab(this)">🌴 Malayalam</button>
         <button class="chip" data-tab="pop" onclick="switchTab(this)">✨ Pop</button>
         <button class="chip" data-tab="hiphop" onclick="switchTab(this)">🎤 Hip-Hop</button>
         <button class="chip" data-tab="rock" onclick="switchTab(this)">🎸 Rock</button>
@@ -2210,7 +2169,6 @@
         <button class="chip" data-tab="jazz" onclick="switchTab(this)">🎷 Jazz</button>
         <button class="chip" data-tab="electronic" onclick="switchTab(this)">🎛 Electronic</button>
         <button class="chip" data-tab="liked" onclick="switchTab(this)">❤️ Liked</button>
-        <button class="chip" data-tab="updates" onclick="switchTab(this)">🔔 Updates</button>
         <button class="chip" data-tab="owner" onclick="switchTab(this)">👤 Creator</button>
       </div>
 
@@ -2254,10 +2212,10 @@
           <div class="bnii">❤️</div>
           <div class="bnil">Liked</div>
         </div>
-        <div class="bni" id="bn-updates" onclick="bnav('updates')">
+        <div class="bni" id="bn-queue" onclick="bnav('queue')">
           <div class="bnid"></div>
-          <div class="bnii">🔔</div>
-          <div class="bnil">Updates</div>
+          <div class="bnii">📋</div>
+          <div class="bnil">Queue</div>
         </div>
         <div class="bni" id="bn-owner" onclick="bnav('owner')">
           <div class="bnid"></div>
@@ -2311,6 +2269,8 @@
     <div class="fpext">
       <button class="fpxb" onclick="toggleLike()"><span>❤️</span><span>Like</span></button>
       <button class="fpxb" onclick="shareTrack()"><span>🔗</span><span>Share</span></button>
+      <button class="fpxb" onclick="closeFP();bnav('queue')"><span>📋</span><span>Queue</span></button>
+      <button class="fpxb" onclick="openSrc()"><span>🌐</span><span>Source</span></button>
     </div>
   </div>
 
@@ -2326,8 +2286,8 @@
       new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => { if ((n.tagName === 'SCRIPT' || n.tagName === 'IFRAME') && AD.some(p => (n.src || '').includes(p))) n.remove(); }))).observe(document.documentElement, { childList: true, subtree: true });
     })();
 
-    // AUTO-REFRESH every 30 min — surfaces newly released tracks with fresh queries
-    setInterval(() => { Object.keys(_C).forEach(k => delete _C[k]); renderHome(); }, 1800000);
+    // AUTO-REFRESH every 60 min — surfaces newly released tracks
+    setInterval(() => { Object.keys(_C).forEach(k => delete _C[k]); renderHome(); }, 3600000);
     window.addEventListener('load', () => {
       setTimeout(() => {
         const intro = document.getElementById('intro');
@@ -2370,7 +2330,6 @@
       if (/punjabi|diljit|guru randhawa|badshah|ap dhillon|karan aujla|sidhu/.test(all)) return 'punjabi';
       if (/tamil|anirudh|kollywood|vijay|sid sriram/.test(all)) return 'tamil';
       if (/telugu|tollywood|devi sri prasad|thaman/.test(all)) return 'telugu';
-      if (/malayalam|mollywood|mohanlal|mammootty|ks chithra|yesudas|harisankar|kerala/.test(all)) return 'malayalam';
       if (/hip.hop|rap|drake|kendrick|post malone|badshah/.test(all)) return 'hiphop';
       if (/rock|metal|coldplay|imagine dragons|linkin|green day/.test(all)) return 'rock';
       if (/lofi|lo-fi|chill|study beat/.test(all)) return 'lofi';
@@ -2534,11 +2493,10 @@
   </div>`;
     }
 
-    // ── CACHE — session-scoped so every fresh load gets new results ──────────────
-    const _SESSION = Date.now() + '_' + Math.random().toString(36).slice(2);
+    // ── CACHE (1 hour TTL so new releases surface automatically) ─────────────────
     const _C = {};
-    const cG = k => _C[_SESSION + k] || null;
-    const cS = (k, d) => { _C[_SESSION + k] = d; };
+    const cG = k => { const v = _C[k]; if (!v || Date.now() - v.t > 3600000) return null; return v.d; };
+    const cS = (k, d) => { _C[k] = { d, t: Date.now() }; };
 
     // ══════════════════════════════════════════════════════════════════
     //  SOURCE 1 — JioSaavn (multiple mirrors, auto-fallback) ✅
@@ -2584,10 +2542,10 @@
       return null;
     }
 
-    async function svSearch(q, limit = 30, page = 1) {
-      const k = 'sv4_' + q + limit + page; const c = cG(k); if (c) return c;
+    async function svSearch(q, limit = 30) {
+      const k = 'sv4_' + q + limit; const c = cG(k); if (c) return c;
       try {
-        const d = await svFetch(`/search/songs?query=${encodeURIComponent(q)}&limit=${limit}&page=${page}`);
+        const d = await svFetch(`/search/songs?query=${encodeURIComponent(q)}&limit=${limit}&page=1`);
         const results = d?.data?.results || d?.results || d?.songs?.results || [];
         const t = results.map(sMap).filter(Boolean);
         if (t.length) cS(k, t);
@@ -2632,7 +2590,7 @@
     async function jFetch(params) {
       const k = 'j4_' + JSON.stringify(params); const c = cG(k); if (c) return c;
       try {
-        const ps = new URLSearchParams({ client_id: JID, format: 'json', audioformat: 'mp32', imagesize: '600', offset: _roff(), ...params });
+        const ps = new URLSearchParams({ client_id: JID, format: 'json', audioformat: 'mp32', imagesize: '600', ...params });
         const r = await fetch(`${JB}/tracks/?${ps}`);
         if (!r.ok) return [];
         const d = await r.json();
@@ -2680,19 +2638,6 @@
 
 
     // ── Famous artist/query lists ─────────────────────────────────────
-    // ── Random helpers — ensure every session shows different songs ──────────────
-    const _rp = () => Math.floor(Math.random() * 5) + 1;          // random page 1-5
-    const _roff = () => Math.floor(Math.random() * 40);            // random offset 0-39
-    const _pick = (arr, n) => {                                     // pick n random items
-      const a = [...arr]; for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]];
-      } return a.slice(0, n);
-    };
-    const _yr = () => {                                             // rotate year suffix
-      const yrs = ['2025', '2024', '2025', '2023', '2025'];        // weighted toward 2025
-      return yrs[Math.floor(Math.random() * yrs.length)];
-    };
-
     const IND_BOLLYWOOD = ['Arijit Singh', 'Shreya Ghoshal', 'Neha Kakkar', 'Jubin Nautiyal', 'Armaan Malik', 'Atif Atam', 'Kumar Sanu', 'Udit Narayan', 'Sonu Nigam', 'Sunidhi Chauhan'];
     const IND_PUNJABI = ['Diljit Dosanjh', 'Guru Randhawa', 'Badshah', 'AP Dhillon', 'Karan Aujla', 'Sidhu Moosewala', 'Hardy Sandhu', 'Harrdy Sandhu', 'Jasmine Sandlas'];
     const IND_TAMIL = ['Anirudh Ravichander', 'Sid Sriram', 'Yuvan Shankar Raja', 'Harris Jayaraj', 'D Imman', 'SPB Tamil', 'Vijay Antony'];
@@ -2700,7 +2645,7 @@
     const ENG_ARTISTS = ['The Weeknd', 'Ed Sheeran', 'Taylor Swift', 'Drake', 'Billie Eilish', 'Harry Styles', 'Dua Lipa', 'Post Malone', 'Bruno Mars', 'Coldplay', 'Ariana Grande', 'Justin Bieber'];
 
     async function svMulti(queries, limit = 20) {
-      const res = await Promise.all(queries.map(q => svSearch(q, limit, _rp())));
+      const res = await Promise.all(queries.map(q => svSearch(q, limit)));
       const seen = new Set(); const all = [];
       res.flat().forEach(t => { if (t && !seen.has(t.id)) { seen.add(t.id); all.push(t); } });
       return all;
@@ -2728,104 +2673,73 @@
         if (all.length < 8) { const fb = await jFetch({ search: q, order: 'popularity_week', limit: '20' }); add(fb); }
 
       } else if (mode === 'trending' || mode === 'home') {
-        const yr = _yr();
-        const trendQueries = [
-          `trending india ${yr}`, `top hindi songs ${yr}`, `viral songs india ${yr}`,
-          `new hindi songs ${yr}`, `latest bollywood ${yr}`, `hit songs india ${yr}`,
-          `popular songs india ${yr}`, `best hindi ${yr}`, `chart toppers india ${yr}`
-        ];
-        const pickedQ = _pick(trendQueries, 3);
         const [sv1, sv2, sv3, sc1, jm1] = await Promise.all([
-          svSearch(pickedQ[0], 40, _rp()),
-          svSearch(pickedQ[1], 30, _rp()),
-          svSearch(pickedQ[2], 30, _rp()),
-          scSearch(`trending india ${yr}`, 20),
+          svSearch('trending india 2025', 40),
+          svSearch('top hindi songs 2025', 30),
+          svSearch('viral songs india 2025', 30),
+          scSearch('trending india 2025', 20),
           jFetch({ order: 'popularity_week', limit: '30' }),
         ]);
         add(sv1); add(sv2); add(sv3); add(sc1); add(jm1);
         if (all.length < 10) { const fb = await fmaFetch({ sort: 'track_date_recorded', limit: 30 }); add(fb); }
 
       } else if (mode === 'bollywood') {
-        const yr = _yr();
-        const bollQ = [`bollywood hits ${yr}`, `new hindi songs ${yr}`, `best bollywood songs`, `hindi film songs ${yr}`, `bollywood romantic`, `bollywood party songs`, `hindi love songs ${yr}`, `bollywood dance ${yr}`];
         const [sv1, sv2, sc1] = await Promise.all([
-          svMulti(_pick(bollQ, 4), 40),
-          svMulti(_pick(IND_BOLLYWOOD, 5), 15),
-          scSearch(`bollywood hits ${yr}`, 20),
+          svMulti(['bollywood hits 2025', 'new hindi songs 2025', 'best bollywood songs', 'hindi film songs 2024', 'bollywood romantic'], 40),
+          svMulti(IND_BOLLYWOOD.slice(0, 5), 15),
+          scSearch('bollywood hits 2025', 20),
         ]);
         add(sv1); add(sv2); add(sc1);
 
       } else if (mode === 'punjabi') {
-        const yr = _yr();
-        const punjQ = [`punjabi songs ${yr}`, `latest punjabi hits`, `punjabi pop ${yr}`, `punjabi party songs`, `new punjabi ${yr}`, `punjabi romantic songs`];
         const [sv1, sc1] = await Promise.all([
-          svMulti([..._pick(punjQ, 3), ..._pick(IND_PUNJABI, 3)], 25),
-          scSearch(`punjabi songs ${yr}`, 20),
+          svMulti(['punjabi songs 2025', 'latest punjabi hits', 'punjabi pop 2025', ...IND_PUNJABI.slice(0, 4)], 25),
+          scSearch('punjabi songs 2025', 20),
         ]);
         add(sv1); add(sc1);
 
       } else if (mode === 'tamil') {
-        const yr = _yr();
-        const tamQ = [`tamil songs ${yr}`, `kollywood hits ${yr}`, `new tamil songs`, `tamil romantic ${yr}`, `tamil mass songs`, `anirudh songs ${yr}`];
         const [sv1, sc1] = await Promise.all([
-          svMulti([..._pick(tamQ, 3), ..._pick(IND_TAMIL, 3)], 25),
-          scSearch(`tamil songs ${yr}`, 15),
+          svMulti(['tamil songs 2025', 'kollywood hits 2025', 'new tamil songs', ...IND_TAMIL.slice(0, 4)], 25),
+          scSearch('tamil songs 2025', 15),
         ]);
         add(sv1); add(sc1);
 
       } else if (mode === 'telugu') {
-        const yr = _yr();
-        const telQ = [`telugu songs ${yr}`, `tollywood hits ${yr}`, `new telugu songs`, `telugu romantic ${yr}`, `telugu mass bgm`];
         const [sv1, sc1] = await Promise.all([
-          svMulti([..._pick(telQ, 3), ..._pick(IND_TELUGU, 3)], 25),
-          scSearch(`telugu songs ${yr}`, 15),
-        ]);
-        add(sv1); add(sc1);
-
-      } else if (mode === 'malayalam') {
-        const yr = _yr();
-        const malQ = [`malayalam songs ${yr}`, `mollywood hits ${yr}`, `new malayalam songs`, `malayalam romantic ${yr}`, `kerala songs ${yr}`, `malayalam film songs`, `mohanlal songs`, `vijay yesudas songs`, `ks harisankar songs`];
-        const [sv1, sc1] = await Promise.all([
-          svMulti(_pick(malQ, 4), 25),
-          scSearch(`malayalam songs ${yr}`, 15),
+          svMulti(['telugu songs 2025', 'tollywood hits 2025', 'new telugu songs', ...IND_TELUGU.slice(0, 3)], 25),
+          scSearch('telugu songs 2025', 15),
         ]);
         add(sv1); add(sc1);
 
       } else if (mode === 'pop') {
-        const yr = _yr();
-        const engQ = [`english pop hits ${yr}`, `top pop songs`, `trending english songs india`, `pop hits worldwide ${yr}`, `best pop ${yr}`, `viral pop songs`];
         const [sv1, sc1, jm1] = await Promise.all([
-          svMulti([..._pick(engQ, 3), ..._pick(ENG_ARTISTS, 4)], 20),
-          scSearch(`pop hits ${yr}`, 20),
+          svMulti(['english pop hits 2025', 'top pop songs', 'trending english songs india', ...ENG_ARTISTS.slice(0, 4)], 20),
+          scSearch('pop hits 2025', 20),
           jFetch({ tags: 'pop', order: 'popularity_week', limit: '30' }),
         ]);
         add(sv1); add(sc1); add(jm1);
 
       } else if (mode === 'hiphop') {
-        const yr = _yr();
-        const hipQ = [`hip hop ${yr}`, `rap songs hindi`, `badshah rap songs`, `divine rap`, `english rap hits`, `desi hip hop`, `trap music ${yr}`];
         const [sv1, sc1, jm1] = await Promise.all([
-          svMulti(_pick(hipQ, 4), 20),
-          scSearch(`hip hop rap ${yr}`, 20),
+          svMulti(['hip hop 2025', 'rap songs hindi', 'badshah rap songs', 'divine rap', 'english rap hits'], 20),
+          scSearch('hip hop rap 2025', 20),
           jFetch({ tags: 'hip-hop', order: 'popularity_week', limit: '30' }),
         ]);
         add(sv1); add(sc1); add(jm1);
 
       } else if (mode === 'rock') {
-        const yr = _yr();
-        const rockQ = [`rock songs ${yr}`, `coldplay`, `imagine dragons`, `linkin park`, `rock hits english`, `indie rock ${yr}`, `classic rock`];
         const [sv1, sc1, jm1, fma1] = await Promise.all([
-          svMulti(_pick(rockQ, 4), 20),
-          scSearch(`rock hits ${yr}`, 20),
+          svMulti(['rock songs 2025', 'coldplay', 'imagine dragons', 'linkin park', 'rock hits english'], 20),
+          scSearch('rock hits 2025', 20),
           jFetch({ tags: 'rock', order: 'popularity_week', limit: '30' }),
           fmaFetch({ genre_id: '25', sort: 'track_date_recorded', limit: 20 }),
         ]);
         add(sv1); add(sc1); add(jm1); add(fma1);
 
       } else if (mode === 'lofi') {
-        const lofiQ = ['lofi hindi songs', 'lofi beats india', 'chill lofi music', 'study lofi', 'lofi chill beats', 'lofi sleep music', 'lofi concentration'];
         const [sv1, sc1, jm1, fma1] = await Promise.all([
-          svMulti(_pick(lofiQ, 3), 20),
+          svMulti(['lofi hindi songs', 'lofi beats india', 'chill lofi music', 'study lofi'], 20),
           scSearch('lofi hip hop chill beats', 20),
           jFetch({ tags: 'lofi', order: 'popularity_week', limit: '30' }),
           fmaFetch({ tags: 'lo-fi', limit: 20 }),
@@ -2833,40 +2747,36 @@
         add(sv1); add(sc1); add(jm1); add(fma1);
 
       } else if (mode === 'jazz') {
-        const jazzOrders = ['popularity_week', 'popularity_total', 'releasedate'];
         const [jm1, jm2, sc1, fma1] = await Promise.all([
-          jFetch({ tags: 'jazz', order: jazzOrders[Math.floor(Math.random()*2)], limit: '40' }),
-          jFetch({ tags: 'smooth jazz', order: jazzOrders[Math.floor(Math.random()*2)], limit: '30' }),
+          jFetch({ tags: 'jazz', order: 'popularity_week', limit: '40' }),
+          jFetch({ tags: 'smooth jazz', order: 'popularity_total', limit: '30' }),
           scSearch('smooth jazz relaxing', 15),
           fmaFetch({ genre_id: '45', limit: 20 }),
         ]);
         add(jm1); add(jm2); add(sc1); add(fma1);
 
       } else if (mode === 'classical') {
-        const classOrders = ['popularity_week', 'popularity_total', 'releasedate'];
         const [jm1, jm2, sc1, fma1] = await Promise.all([
-          jFetch({ tags: 'classical', order: classOrders[Math.floor(Math.random()*2)], limit: '40' }),
-          jFetch({ tags: 'piano', order: classOrders[Math.floor(Math.random()*2)], limit: '30' }),
+          jFetch({ tags: 'classical', order: 'popularity_week', limit: '40' }),
+          jFetch({ tags: 'piano', order: 'popularity_total', limit: '30' }),
           scSearch('classical piano relaxing', 15),
           fmaFetch({ genre_id: '1', limit: 20 }),
         ]);
         add(jm1); add(jm2); add(sc1); add(fma1);
 
       } else if (mode === 'electronic') {
-        const yr = _yr();
         const [sv1, sc1, jm1, fma1] = await Promise.all([
-          svSearch(`electronic dance music hits ${yr}`, 20, _rp()),
-          scSearch(`electronic dance music ${yr}`, 20),
+          svSearch('electronic dance music hits 2025', 20),
+          scSearch('electronic dance music 2025', 20),
           jFetch({ tags: 'electronic', order: 'popularity_week', limit: '40' }),
           fmaFetch({ tags: 'electronic', limit: 20 }),
         ]);
         add(sv1); add(sc1); add(jm1); add(fma1);
 
       } else if (mode === 'ambient') {
-        const ambOrders = ['popularity_week', 'popularity_total', 'releasedate'];
         const [jm1, jm2, sc1, fma1] = await Promise.all([
-          jFetch({ tags: 'ambient', order: ambOrders[Math.floor(Math.random()*2)], limit: '40' }),
-          jFetch({ tags: 'new age', order: ambOrders[Math.floor(Math.random()*2)], limit: '30' }),
+          jFetch({ tags: 'ambient', order: 'popularity_week', limit: '40' }),
+          jFetch({ tags: 'new age', order: 'popularity_total', limit: '30' }),
           scSearch('ambient relaxing meditation', 15),
           fmaFetch({ tags: 'ambient', limit: 20 }),
         ]);
@@ -2888,10 +2798,10 @@
     const artU = (t, sz = 300) => {
       if (!t?.art || t.art.length < 4) return `https://picsum.photos/seed/${encodeURIComponent(t?.title || 'x')}/${sz}`;
       if (t.src === 'saavn' || t.art.includes('saavncdn'))
-        return t.art.replace(/\d+x\d+/g, sz >= 150 ? '500x500' : '150x150');
+        return t.art.replace(/\d+x\d+/g, sz >= 400 ? '500x500' : '150x150');
       if (t.art.includes('mzstatic') || t.art.includes('mzcdn'))
-        return t.art.replace(/\d+x\d+bb/, `${Math.max(sz, 500)}x${Math.max(sz, 500)}bb`);
-      if (t.src === 'jamendo') return t.art.replace(/\d+x\d+/, `${Math.max(sz, 500)}x${Math.max(sz, 500)}`);
+        return t.art.replace(/\d+x\d+bb/, `${sz}x${sz}bb`);
+      if (t.src === 'jamendo') return t.art.replace(/\d+x\d+/, `${sz}x${sz}`);
       if (t.src === 'soundcloud') return t.art.replace('-large', '-t500x500');
       return t.art;
     };
@@ -2967,7 +2877,6 @@
         { n: 'Punjabi', e: '🥁', c: 'linear-gradient(135deg,#f7971e,#ff4500)', t: 'punjabi' },
         { n: 'Tamil', e: '🎵', c: 'linear-gradient(135deg,#1e3c72,#8e24aa)', t: 'tamil' },
         { n: 'Telugu', e: '🎶', c: 'linear-gradient(135deg,#11998e,#38ef7d)', t: 'telugu' },
-        { n: 'Malayalam', e: '🌴', c: 'linear-gradient(135deg,#005c32,#1a9e5e)', t: 'malayalam' },
         { n: 'Pop', e: '🎤', c: 'linear-gradient(135deg,#ff6b9d,#c44569)', t: 'pop' },
         { n: 'Hip-Hop', e: '🎧', c: 'linear-gradient(135deg,#f7797d,#fbd786)', t: 'hiphop' },
         { n: 'Rock', e: '🎸', c: 'linear-gradient(135deg,#373b44,#4286f4)', t: 'rock' },
@@ -2986,40 +2895,33 @@
       const c = document.getElementById('content');
       c.innerHTML = skel();
       // Load all home sections in parallel
-      const [trendT, bollT, punjT, tamT, telT, malT, popT, hipT, rockT, recT] = await Promise.all([
+      const [trendT, bollT, punjT, tamT, telT, popT, hipT, rockT, recT] = await Promise.all([
         getTracks('trending'),
         getTracks('bollywood'),
         getTracks('punjabi'),
         getTracks('tamil'),
         getTracks('telugu'),
-        getTracks('malayalam'),
         getTracks('pop'),
         getTracks('hiphop'),
         getTracks('rock'),
         getRecommendations(),
       ]);
-      // Shuffle each section so order is fresh every session
-      const shuffle = arr => _pick(arr, arr.length);
-      const trendS = shuffle(trendT), bollS = shuffle(bollT), punjS = shuffle(punjT),
-            tamS = shuffle(tamT), telS = shuffle(telT), malS = shuffle(malT),
-            popS = shuffle(popT), hipS = shuffle(hipT), rockS = shuffle(rockT);
       // Hero from trending full tracks with good art
-      const heroPool = [...trendS, ...bollS].filter(t => t.full && t.art && t.art.length > 10);
-      const heroT = heroPool[Math.floor(Math.random() * Math.min(8, heroPool.length))] || trendS[0] || bollS[0];
-      window._T = trendS.length ? trendS : bollS;
+      const heroPool = [...trendT, ...bollT].filter(t => t.full && t.art && t.art.length > 10);
+      const heroT = heroPool[Math.floor(Math.random() * Math.min(8, heroPool.length))] || trendT[0] || bollT[0];
+      window._T = trendT.length ? trendT : bollT;
       c.innerHTML =
-        (heroT ? heroH(heroT, '_T', trendS.findIndex(x => x.id === heroT.id) >= 0 ? trendS.findIndex(x => x.id === heroT.id) : 0) : '') +
+        (heroT ? heroH(heroT, '_T', trendT.findIndex(x => x.id === heroT.id) >= 0 ? trendT.findIndex(x => x.id === heroT.id) : 0) : '') +
         (recT.length ? recH(recT, '_REC') : '') +
-        (trendS.length ? trendH(trendS, '_TREND') : '') +
-        (bollS.length ? hrowH(bollS, '🎬 Bollywood Hits', '_BOLL') : '') +
-        (punjS.length ? hrowH(punjS, '🥁 Punjabi Bangers', '_PUNJ') : '') +
-        (tamS.length ? hrowH(tamS, '🎵 Tamil Hits', '_TAM') : '') +
-        (telS.length ? hrowH(telS, '🎶 Telugu Hits', '_TEL') : '') +
-        (malS.length ? hrowH(malS, '🌴 Malayalam Hits', '_MAL') : '') +
-        (popS.length ? hrowH(popS, '🌍 Global Pop', '_POP') : '') +
-        (hipS.length ? hrowH(hipS, '🎤 Hip-Hop', '_HIP') : '') +
-        (rockS.length ? hrowH(rockS, '🎸 Rock', '_ROCK') : '') +
-        trowsH(trendS, '🔥 Hot Right Now', '_T') +
+        (trendT.length ? trendH(trendT, '_TREND') : '') +
+        (bollT.length ? hrowH(bollT, '🎬 Bollywood Hits', '_BOLL') : '') +
+        (punjT.length ? hrowH(punjT, '🥁 Punjabi Bangers', '_PUNJ') : '') +
+        (tamT.length ? hrowH(tamT, '🎵 Tamil Hits', '_TAM') : '') +
+        (telT.length ? hrowH(telT, '🎶 Telugu Hits', '_TEL') : '') +
+        (popT.length ? hrowH(popT, '🌍 Global Pop', '_POP') : '') +
+        (hipT.length ? hrowH(hipT, '🎤 Hip-Hop', '_HIP') : '') +
+        (rockT.length ? hrowH(rockT, '🎸 Rock', '_ROCK') : '') +
+        trowsH(trendT, '🔥 Hot Right Now', '_T') +
         genreH();
     }
 
@@ -3033,9 +2935,8 @@
       if (tab === 'home') { renderHome(); return; }
       if (tab === 'liked') { renderLiked(); return; }
       if (tab === 'owner') { renderOwner(); return; }
-      if (tab === 'updates') { renderUpdates(); return; }
       const c = document.getElementById('content'); c.innerHTML = skel();
-      const labels = { trending: '🔥 Trending India', bollywood: '🎬 Bollywood', punjabi: '🥁 Punjabi', tamil: '🎵 Tamil', telugu: '🎶 Telugu', malayalam: '🌴 Malayalam', pop: '✨ Global Pop', hiphop: '🎤 Hip-Hop', rock: '🎸 Rock', lofi: '☁️ Lo-Fi', jazz: '🎷 Jazz', electronic: '🎛 Electronic', classical: '🎻 Classical', ambient: '🌊 Ambient' };
+      const labels = { trending: '🔥 Trending India', bollywood: '🎬 Bollywood', punjabi: '🥁 Punjabi', tamil: '🎵 Tamil', telugu: '🎶 Telugu', pop: '✨ Global Pop', hiphop: '🎤 Hip-Hop', rock: '🎸 Rock', lofi: '☁️ Lo-Fi', jazz: '🎷 Jazz', electronic: '🎛 Electronic', classical: '🎻 Classical', ambient: '🌊 Ambient' };
       const tracks = await getTracks(tab); window._T = tracks;
       c.innerHTML = (tracks[0] ? heroH(tracks[0], '_T', 0) : '') + hrowH(tracks, labels[tab] || tab, '_T') + trowsH(tracks, labels[tab] || tab, '_T');
     }
@@ -3054,10 +2955,10 @@
       if (s === 'home') { renderHome(); return; }
       if (s === 'liked') { renderLiked(); return; }
       if (s === 'owner') { renderOwner(); return; }
-      if (s === 'updates') { renderUpdates(); return; }
+      if (s === 'queue') { renderQueue(); return; }
       if (s === 'search') { document.getElementById('si').focus(); return; }
       const c = document.getElementById('content'); c.innerHTML = skel();
-      const labels = { trending: '🔥 Trending India', bollywood: '🎬 Bollywood', punjabi: '🥁 Punjabi', tamil: '🎵 Tamil', telugu: '🎶 Telugu', malayalam: '🌴 Malayalam', pop: '✨ Global Pop', hiphop: '🎤 Hip-Hop', rock: '🎸 Rock', lofi: '☁️ Lo-Fi', jazz: '🎷 Jazz', electronic: '🎛 Electronic', classical: '🎻 Classical', ambient: '🌊 Ambient' };
+      const labels = { trending: '🔥 Trending India', bollywood: '🎬 Bollywood', punjabi: '🥁 Punjabi', tamil: '🎵 Tamil', telugu: '🎶 Telugu', pop: '✨ Global Pop', hiphop: '🎤 Hip-Hop', rock: '🎸 Rock', lofi: '☁️ Lo-Fi', jazz: '🎷 Jazz', electronic: '🎛 Electronic', classical: '🎻 Classical', ambient: '🌊 Ambient' };
       const tracks = await getTracks(s); window._T = tracks;
       c.innerHTML = (tracks[0] ? heroH(tracks[0], '_T', 0) : '') + hrowH(tracks, labels[s] || s, '_T') + trowsH(tracks, labels[s] || s, '_T');
     }
@@ -3069,53 +2970,16 @@
       if (s === 'home') { setChip(document.querySelector('[data-tab="home"]')); renderHome(); }
       else if (s === 'liked') { setChip(document.querySelector('[data-tab="liked"]')); renderLiked(); }
       else if (s === 'owner') { setChip(document.querySelector('[data-tab="owner"]')); renderOwner(); }
-      else if (s === 'updates') { setChip(document.querySelector('[data-tab="updates"]')); renderUpdates(); }
       else if (s === 'search') document.getElementById('si').focus();
+      else if (s === 'queue') renderQueue();
     }
 
-    // SEARCH AUTOCOMPLETE + RECENT SEARCHES
+    // SEARCH AUTOCOMPLETE
     let siT = null, sugD = [];
-    const RECENT_KEY = 'wf_recent_searches';
-    function getRecentSearches() { try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch(e) { return []; } }
-    function saveRecentSearch(q) {
-      if (!q || q.length < 2) return;
-      let rec = getRecentSearches().filter(r => r.toLowerCase() !== q.toLowerCase());
-      rec.unshift(q);
-      rec = rec.slice(0, 5);
-      localStorage.setItem(RECENT_KEY, JSON.stringify(rec));
-    }
-    function removeRecentSearch(q) {
-      let rec = getRecentSearches().filter(r => r !== q);
-      localStorage.setItem(RECENT_KEY, JSON.stringify(rec));
-      const inp = document.getElementById('si');
-      if (!inp.value || inp.value.length < 2) showRecentSearches();
-    }
-    function showRecentSearches() {
-      const rec = getRecentSearches();
-      const box = document.getElementById('sugBox');
-      if (!rec.length) { box.style.display = 'none'; return; }
-      box.style.display = 'block';
-      box.innerHTML =
-        `<div class="sug-recent-hd">Recent<span class="sug-recent-clear" onclick="localStorage.removeItem('wf_recent_searches');document.getElementById('sugBox').style.display='none'">Clear all</span></div>` +
-        rec.map(r => `
-          <div class="si" tabindex="0" onclick="pickRecent('${esc(r)}')">
-            <span style="font-size:15px;opacity:0.45;flex-shrink:0">&#x1F550;</span>
-            <div class="si-info"><div class="si-title">${esc(r)}</div></div>
-            <span class="si-remove" onclick="event.stopPropagation();removeRecentSearch('${esc(r)}')" title="Remove">&#x2715;</span>
-          </div>`).join('');
-    }
-    function pickRecent(q) {
-      document.getElementById('si').value = q;
-      hideSug();
-      doSearch();
-    }
     function onSI(v) {
       clearTimeout(siT);
       const box = document.getElementById('sugBox');
-      if (!v || v.length < 2) {
-        showRecentSearches();
-        return;
-      }
+      if (!v || v.length < 2) { box.style.display = 'none'; return; }
       siT = setTimeout(() => loadSug(v), 280);
     }
     async function loadSug(q) {
@@ -3142,13 +3006,10 @@
     function focusSug(i) { const els = document.querySelectorAll('.si'); if (els[i]) els[i].focus(); }
     function sugKey(e, i) { if (e.key === 'Enter') pickSug(i); else if (e.key === 'ArrowDown') { e.preventDefault(); focusSug(i + 1); } else if (e.key === 'ArrowUp') { e.preventDefault(); i === 0 ? document.getElementById('si').focus() : focusSug(i - 1); } }
     function hideSug() { document.getElementById('sugBox').style.display = 'none'; }
-    // Show recents on focus if input empty
-    document.getElementById('si').addEventListener('focus', () => { if (!document.getElementById('si').value) showRecentSearches(); });
     document.addEventListener('click', e => { if (!e.target.closest('.swrap')) hideSug(); });
 
     async function doSearch() {
       const q = document.getElementById('si').value.trim(); if (!q) return;
-      saveRecentSearch(q);
       setChip(null); hideSug();
       const c = document.getElementById('content'); c.innerHTML = skel();
       const tracks = await getTracks('search', q); window._T = tracks;
@@ -3178,96 +3039,6 @@
       if (idx >= 0) { liked.splice(idx, 1); toast('💔 Removed'); } else { liked.unshift(t); toast('❤️ Liked!'); }
       localStorage.setItem('wf_liked', JSON.stringify(liked));
       document.querySelectorAll('.tlike').forEach(el => { });
-    }
-
-    // UPDATES
-    function renderUpdates() {
-      const c = document.getElementById('content');
-      c.innerHTML = `<div class="owner-page" style="padding:0 0 40px">
-        <div style="padding:28px 28px 12px">
-          <div style="font-family:var(--FB);font-size:32px;background:linear-gradient(135deg,#ff3e3e,#ff6b00,#ffaa00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 14px rgba(255,100,0,0.5));">UPDATES</div>
-          <div style="font-size:13px;color:var(--t2);margin-top:4px;">What's new in WaveFlow</div>
-        </div>
-
-        <div class="owner-section">
-          <div class="owner-sec-title">🚀 Latest — v2.1</div>
-          <div class="owner-timeline">
-            <div class="owner-tl-item">
-              <div class="owner-tl-dot"></div>
-              <div>
-                <div class="owner-tl-year">How to Use — Search</div>
-                <div class="owner-tl-text">Type any song, artist or album in the search bar and tap Search or press Enter. Results stream from JioSaavn + SoundCloud instantly. Tap any card or row to play.</div>
-              </div>
-            </div>
-            <div class="owner-tl-item">
-              <div class="owner-tl-dot"></div>
-              <div>
-                <div class="owner-tl-year">How to Use — Genres</div>
-                <div class="owner-tl-text">Swipe through the chip bar or use the sidebar to jump to a genre (Bollywood, Punjabi, Tamil, Lo-Fi…). Each genre loads a curated mix of full-length tracks automatically.</div>
-              </div>
-            </div>
-            <div class="owner-tl-item">
-              <div class="owner-tl-dot"></div>
-              <div>
-                <div class="owner-tl-year">How to Use — Player</div>
-                <div class="owner-tl-text">Tap any song to start playing. The mini-player stays pinned at the bottom. Tap it to open the full-screen player — swipe down to close. Use ❤️ to like songs and ⏭ to skip.</div>
-              </div>
-            </div>
-            <div class="owner-tl-item">
-              <div class="owner-tl-dot"></div>
-              <div>
-                <div class="owner-tl-year">How to Use — Liked Songs</div>
-                <div class="owner-tl-text">Tap ❤️ on any track (in the full player or track list) to save it. Access all your liked songs anytime from the ❤️ Liked tab — even offline. They're saved locally on your device.</div>
-              </div>
-            </div>
-            <div class="owner-tl-item">
-              <div class="owner-tl-dot"></div>
-              <div>
-                <div class="owner-tl-year">How to Use — AI Picks</div>
-                <div class="owner-tl-text">Play a few songs and WaveFlow learns your taste. A "Made for You" section will appear on the Home screen with personalised recommendations based on your listening history.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="owner-section">
-          <div class="owner-sec-title">📋 Changelog</div>
-          <div class="owner-timeline">
-            <div class="owner-tl-item">
-              <div class="owner-tl-dot"></div>
-              <div>
-                <div class="owner-tl-year">v2.1 — UI Refresh</div>
-                <div class="owner-tl-text">Removed Queue tab for a cleaner interface. Added this Updates page. Improved artwork quality across all sources to 500×500. Removed source link from player — keep things clean.</div>
-              </div>
-            </div>
-            <div class="owner-tl-item">
-              <div class="owner-tl-dot"></div>
-              <div>
-                <div class="owner-tl-year">v2.0 — Desktop Support</div>
-                <div class="owner-tl-text">Full desktop sidebar, persistent bottom player bar, keyboard shortcuts (Space = play/pause, ← → = prev/next). Responsive across all screen sizes.</div>
-              </div>
-            </div>
-            <div class="owner-tl-item">
-              <div class="owner-tl-dot"></div>
-              <div>
-                <div class="owner-tl-year">v1.5 — AI Recommendations</div>
-                <div class="owner-tl-text">Play-history engine that tracks genre and artist preference over 200 plays. "Made for You" row on the Home screen updates with every session.</div>
-              </div>
-            </div>
-            <div class="owner-tl-item">
-              <div class="owner-tl-dot"></div>
-              <div>
-                <div class="owner-tl-year">v1.0 — Launch</div>
-                <div class="owner-tl-text">WaveFlow goes live with JioSaavn + SoundCloud + Jamendo + FMA. Full-length songs only — no 30-second previews, no ads, no subscriptions.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin:0 28px;padding:18px 20px;background:rgba(255,68,0,0.07);border:1px solid rgba(255,100,0,0.2);border-radius:16px;font-size:13px;color:var(--t2);line-height:1.6;">
-          💡 <strong style="color:#fff">Tip:</strong> Tap 🔄 in the top bar anytime to refresh and surface newly released tracks. WaveFlow also auto-refreshes every hour in the background.
-        </div>
-      </div>`;
     }
 
     // QUEUE
