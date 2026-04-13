@@ -363,49 +363,6 @@
       #app {
         height: 100dvh;
       }
-      .ham-btn {
-        display: block;
-      }
-      .topbar {
-        justify-content: flex-start;
-      }
-      .brand {
-        flex: 1;
-      }
-      .chips {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 65px;
-        left: 20px;
-        width: 260px;
-        background: rgba(18, 18, 18, 0.98);
-        border: 1px solid rgba(255,100,0,0.3);
-        border-radius: 16px;
-        padding: 16px;
-        z-index: 100;
-        backdrop-filter: blur(20px);
-        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-        gap: 10px;
-        max-height: 70vh;
-        overflow-y: auto;
-        transform: translateY(-10px);
-        opacity: 0;
-        pointer-events: none;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-      .chips.open {
-        transform: translateY(0);
-        opacity: 1;
-        pointer-events: auto;
-      }
-      .chip {
-        width: 100%;
-        text-align: left;
-        padding: 12px 20px;
-        font-size: 14px;
-        border-radius: 12px;
-      }
     }
 
     /* Desktop: hide bottom nav & chips on wide screens */
@@ -615,23 +572,7 @@
       background: rgba(255, 62, 62, 0.1);
     }
 
-    /* CHIPS AND HAMBURGER */
-    .ham-btn {
-      display: none;
-      font-size: 24px;
-      background: none;
-      border: none;
-      color: var(--text);
-      cursor: pointer;
-      padding: 5px;
-      margin-right: 12px;
-      transition: transform 0.2s;
-    }
-    
-    .ham-btn:active {
-      transform: scale(0.85);
-    }
-
+    /* CHIPS */
     .chips {
       display: flex;
       gap: 8px;
@@ -3157,7 +3098,6 @@
       <div class="orb o2"></div>
 
       <div class="topbar">
-        <button class="ham-btn" id="hamBtn" onclick="toggleHamMenu()">☰</button>
         <div class="brand">WAVEFLOW</div>
         <div class="tbr">
           <div class="ib" title="Refresh music"
@@ -4004,16 +3944,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
 
     // TABS
     let curTab = 'home';
-    function toggleHamMenu() {
-      const chips = document.getElementById('chips');
-      chips.classList.toggle('open');
-    }
-
-    function setChip(el) { 
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('on')); 
-      if (el) el.classList.add('on'); 
-      document.getElementById('chips')?.classList.remove('open');
-    }
+    function setChip(el) { document.querySelectorAll('.chip').forEach(c => c.classList.remove('on')); if (el) el.classList.add('on'); }
     function setSbActive(id) { document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('on')); const el = document.getElementById('sbi-' + id); if (el) el.classList.add('on'); }
 
     async function switchTab(el) {
@@ -4139,12 +4070,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
     function hideSug() { document.getElementById('sugBox').style.display = 'none'; }
     // Show recents on focus if input empty
     document.getElementById('si').addEventListener('focus', () => { if (!document.getElementById('si').value) showRecentSearches(); });
-    document.addEventListener('click', e => { 
-      if (!e.target.closest('.swrap')) hideSug(); 
-      if (!e.target.closest('.chips') && !e.target.closest('#hamBtn')) {
-        document.getElementById('chips')?.classList.remove('open');
-      }
-    });
+    document.addEventListener('click', e => { if (!e.target.closest('.swrap')) hideSug(); });
 
     async function doSearch() {
       const q = document.getElementById('si').value.trim(); if (!q) return;
