@@ -350,6 +350,92 @@
       border-color: rgba(255, 100, 0, 0.4);
     }
 
+    /* ── HAMBURGER BUTTON (mobile only) ── */
+    .hamburger {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      backdrop-filter: blur(10px);
+    }
+    .hamburger:active { transform: scale(0.88); }
+    .hamburger svg { width: 18px; height: 18px; fill: none; stroke: var(--t2); stroke-width: 2; stroke-linecap: round; }
+
+    /* ── MOBILE DRAWER ── */
+    .drawer-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 200;
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .drawer-overlay.open { opacity: 1; }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 280px;
+      background: rgba(10,10,10,0.98);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: calc(var(--st) + 16px) 0 0;
+      z-index: 201;
+      backdrop-filter: blur(30px);
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(0.34,1.1,0.64,1);
+      overflow: hidden;
+    }
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+    .drawer-brand {
+      font-family: var(--FB);
+      font-size: 28px;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg,#ff3e3e,#ff6b00,#ffaa00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 12px rgba(255,100,0,0.5));
+    }
+    .drawer-close {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px; color: var(--t2);
+      transition: all 0.2s;
+    }
+    .drawer-close:active { transform: scale(0.88); }
+
+    .drawer-nav {
+      flex: 1;
+      overflow-y: auto;
+      scrollbar-width: none;
+      padding-bottom: calc(var(--sb) + 80px);
+    }
+    .drawer-nav::-webkit-scrollbar { display: none; }
+
     /* Mobile: hide sidebar, show bottom nav */
     @media(max-width:768px) {
       .sidebar {
@@ -363,48 +449,18 @@
       #app {
         height: 100dvh;
       }
-      .ham-btn {
+
+      .hamburger {
+        display: flex;
+      }
+
+      .drawer-overlay {
         display: block;
       }
-      .topbar {
-        justify-content: flex-start;
-      }
-      .brand {
-        flex: 1;
-      }
-      .chips {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 65px;
-        left: 20px;
-        width: 260px;
-        background: rgba(18, 18, 18, 0.98);
-        border: 1px solid rgba(255,100,0,0.3);
-        border-radius: 16px;
-        padding: 16px;
-        z-index: 100;
-        backdrop-filter: blur(20px);
-        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-        gap: 10px;
-        max-height: 70vh;
-        overflow-y: auto;
-        transform: translateY(-10px);
-        opacity: 0;
-        pointer-events: none;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-      .chips.open {
-        transform: translateY(0);
-        opacity: 1;
-        pointer-events: auto;
-      }
-      .chip {
-        width: 100%;
-        text-align: left;
-        padding: 12px 20px;
-        font-size: 14px;
-        border-radius: 12px;
+
+      /* Reduce topbar right side clutter on small screens */
+      .tbr .ib:not(:last-child):not(:nth-last-child(2)) {
+        display: none;
       }
     }
 
@@ -420,6 +476,10 @@
 
       .topbar .brand {
         display: none;
+      }
+
+      .hamburger {
+        display: none !important;
       }
 
       /* brand shown in sidebar */
@@ -615,23 +675,7 @@
       background: rgba(255, 62, 62, 0.1);
     }
 
-    /* CHIPS AND HAMBURGER */
-    .ham-btn {
-      display: none;
-      font-size: 24px;
-      background: none;
-      border: none;
-      color: var(--text);
-      cursor: pointer;
-      padding: 5px;
-      margin-right: 12px;
-      transition: transform 0.2s;
-    }
-    
-    .ham-btn:active {
-      transform: scale(0.85);
-    }
-
+    /* CHIPS */
     .chips {
       display: flex;
       gap: 8px;
@@ -3114,6 +3158,44 @@
     <div class="ibar"></div>
   </div>
 
+  <!-- MOBILE DRAWER OVERLAY -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+  <!-- MOBILE DRAWER -->
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <div class="drawer-brand">WAVEFLOW</div>
+      <div class="drawer-close" onclick="closeDrawer()">✕</div>
+    </div>
+    <nav class="drawer-nav">
+      <div class="sb-item on" id="dsbi-home" onclick="sbNav('home');closeDrawer()"><span class="sb-icon">🏠</span>Home</div>
+      <div class="sb-item" id="dsbi-trending" onclick="sbNav('trending');closeDrawer()"><span class="sb-icon">🔥</span>Trending</div>
+      <div class="sb-item" id="dsbi-search" onclick="sbNav('search');closeDrawer()"><span class="sb-icon">🔍</span>Search</div>
+      <div class="sb-item" id="dsbi-liked" onclick="sbNav('liked');closeDrawer()"><span class="sb-icon">❤️</span>Liked Songs</div>
+      <div class="sb-item" id="dsbi-playlists" onclick="sbNav('playlists');closeDrawer()"><span class="sb-icon">📋</span>Playlists</div>
+      <div class="sb-item" id="dsbi-artists" onclick="sbNav('artists');closeDrawer()"><span class="sb-icon">🎤</span>Artists</div>
+      <div class="sb-item" id="dsbi-offline" onclick="sbNav('offline');closeDrawer()"><span class="sb-icon">📥</span>Offline</div>
+      <div class="sb-item" id="dsbi-updates" onclick="sbNav('updates');closeDrawer()"><span class="sb-icon">🔔</span>Updates</div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">Genres</div>
+      <div class="sb-item" id="dsbi-bollywood" onclick="sbNav('bollywood');closeDrawer()"><span class="sb-icon">🎬</span>Bollywood</div>
+      <div class="sb-item" id="dsbi-punjabi" onclick="sbNav('punjabi');closeDrawer()"><span class="sb-icon">🥁</span>Punjabi</div>
+      <div class="sb-item" id="dsbi-tamil" onclick="sbNav('tamil');closeDrawer()"><span class="sb-icon">🎵</span>Tamil</div>
+      <div class="sb-item" id="dsbi-telugu" onclick="sbNav('telugu');closeDrawer()"><span class="sb-icon">🎶</span>Telugu</div>
+      <div class="sb-item" id="dsbi-malayalam" onclick="sbNav('malayalam');closeDrawer()"><span class="sb-icon">🌴</span>Malayalam</div>
+      <div class="sb-item" id="dsbi-pop" onclick="sbNav('pop');closeDrawer()"><span class="sb-icon">✨</span>Pop</div>
+      <div class="sb-item" id="dsbi-hiphop" onclick="sbNav('hiphop');closeDrawer()"><span class="sb-icon">🎤</span>Hip-Hop</div>
+      <div class="sb-item" id="dsbi-rock" onclick="sbNav('rock');closeDrawer()"><span class="sb-icon">🎸</span>Rock</div>
+      <div class="sb-item" id="dsbi-lofi" onclick="sbNav('lofi');closeDrawer()"><span class="sb-icon">☁️</span>Lo-Fi</div>
+      <div class="sb-item" id="dsbi-jazz" onclick="sbNav('jazz');closeDrawer()"><span class="sb-icon">🎷</span>Jazz</div>
+      <div class="sb-item" id="dsbi-electronic" onclick="sbNav('electronic');closeDrawer()"><span class="sb-icon">🎛</span>Electronic</div>
+      <div class="sb-item" id="dsbi-classical" onclick="sbNav('classical');closeDrawer()"><span class="sb-icon">🎻</span>Classical</div>
+      <div class="sb-item" id="dsbi-ambient" onclick="sbNav('ambient');closeDrawer()"><span class="sb-icon">🌊</span>Ambient</div>
+      <div class="sb-divider"></div>
+      <div class="sb-item" id="dsbi-owner" onclick="sbNav('owner');closeDrawer()"><span class="sb-icon">👤</span>About Creator</div>
+    </nav>
+  </div>
+
   <div id="app-shell">
     <!-- DESKTOP SIDEBAR -->
     <aside class="sidebar">
@@ -3157,8 +3239,12 @@
       <div class="orb o2"></div>
 
       <div class="topbar">
-        <button class="ham-btn" id="hamBtn" onclick="toggleHamMenu()">☰</button>
-        <div class="brand">WAVEFLOW</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="hamburger" onclick="openDrawer()" title="Menu">
+            <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </div>
+          <div class="brand">WAVEFLOW</div>
+        </div>
         <div class="tbr">
           <div class="ib" title="Refresh music"
             onclick="Object.keys(_C).forEach(k=>delete _C[k]);renderHome();toast('🔄 Refreshing...')">🔄</div>
@@ -3312,6 +3398,35 @@
   <audio id="aud" preload="metadata"></audio>
 
   <script>
+    // ── MOBILE DRAWER ──────────────────────────────────────────────────
+    function openDrawer() {
+      const overlay = document.getElementById('drawerOverlay');
+      const drawer = document.getElementById('drawer');
+      overlay.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => {
+        overlay.classList.add('open');
+        drawer.classList.add('open');
+      });
+    }
+    function closeDrawer() {
+      const overlay = document.getElementById('drawerOverlay');
+      const drawer = document.getElementById('drawer');
+      overlay.classList.remove('open');
+      drawer.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(() => { overlay.style.display = 'none'; }, 350);
+    }
+    // Swipe to close drawer
+    (function() {
+      let startX = 0;
+      document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      document.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (dx < -60 && document.getElementById('drawer').classList.contains('open')) closeDrawer();
+      }, { passive: true });
+    })();
+
     // AD BLOCKER
     (function () {
       const AD = ['doubleclick', 'googlesyndication', 'googleadservices', 'adnxs', 'taboola', 'outbrain', 'pubmatic', 'rubiconproject', 'pagead', 'adsystem'];
@@ -4004,17 +4119,8 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
 
     // TABS
     let curTab = 'home';
-    function toggleHamMenu() {
-      const chips = document.getElementById('chips');
-      chips.classList.toggle('open');
-    }
-
-    function setChip(el) { 
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('on')); 
-      if (el) el.classList.add('on'); 
-      document.getElementById('chips')?.classList.remove('open');
-    }
-    function setSbActive(id) { document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('on')); const el = document.getElementById('sbi-' + id); if (el) el.classList.add('on'); }
+    function setChip(el) { document.querySelectorAll('.chip').forEach(c => c.classList.remove('on')); if (el) el.classList.add('on'); }
+    function setSbActive(id) { document.querySelectorAll('.sb-item').forEach(n => n.classList.remove('on')); const el = document.getElementById('sbi-' + id); if (el) el.classList.add('on'); const del = document.getElementById('dsbi-' + id); if (del) del.classList.add('on'); }
 
     async function switchTab(el) {
       const tab = el.dataset.tab; curTab = tab; setChip(el); setSbActive(tab);
@@ -4139,12 +4245,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
     function hideSug() { document.getElementById('sugBox').style.display = 'none'; }
     // Show recents on focus if input empty
     document.getElementById('si').addEventListener('focus', () => { if (!document.getElementById('si').value) showRecentSearches(); });
-    document.addEventListener('click', e => { 
-      if (!e.target.closest('.swrap')) hideSug(); 
-      if (!e.target.closest('.chips') && !e.target.closest('#hamBtn')) {
-        document.getElementById('chips')?.classList.remove('open');
-      }
-    });
+    document.addEventListener('click', e => { if (!e.target.closest('.swrap')) hideSug(); });
 
     async function doSearch() {
       const q = document.getElementById('si').value.trim(); if (!q) return;
