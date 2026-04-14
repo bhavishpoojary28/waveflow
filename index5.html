@@ -2431,35 +2431,6 @@
       cursor: pointer; font-family: var(--F); transition: all 0.2s;
     }
     .pl-delete-btn:hover { background: rgba(255,62,62,0.2); }
-    .pl-share-btn {
-      padding: 9px 14px; border-radius: 11px;
-      background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3);
-      color: #38bdf8; font-size: 13px; font-weight: 700;
-      cursor: pointer; font-family: var(--F); transition: all 0.2s;
-    }
-    .pl-share-btn:hover { background: rgba(56,189,248,0.2); }
-
-    /* Share modal */
-    .share-modal-box {
-      background: #141414; border-radius: 24px 24px 0 0;
-      border: 1px solid var(--border); border-bottom: none;
-      padding: 24px 22px calc(var(--sb) + 24px);
-      width: 100%; max-height: 80vh; overflow-y: auto;
-      animation: slideUp 0.3s cubic-bezier(0.34,1.1,0.64,1);
-    }
-    .share-code-box {
-      background: rgba(255,255,255,0.04);
-      border: 1.5px solid rgba(56,189,248,0.3);
-      border-radius: 14px;
-      padding: 14px 16px;
-      font-family: var(--FM);
-      font-size: 12px;
-      color: #38bdf8;
-      word-break: break-all;
-      line-height: 1.6;
-      margin: 14px 0;
-      user-select: all;
-    }
 
     /* Add to playlist modal */
     .pl-modal-overlay {
@@ -3070,7 +3041,17 @@
       <!-- STEP 0: Choose method & enter identifier -->
       <div id="loginStep0">
         <div class="login-step-title">Sign in to continue</div>
-        <div class="login-step-sub">Enter your Gmail address or continue with Google.</div>
+        <div class="login-step-sub">Enter your Gmail or mobile number to get started.</div>
+
+        <!-- TABS -->
+        <div class="login-tabs">
+          <button class="login-tab active" id="tabEmail" onclick="switchLoginTab('email')">
+            ✉️ Gmail
+          </button>
+          <button class="login-tab" id="tabPhone" onclick="switchLoginTab('phone')">
+            📱 Mobile
+          </button>
+        </div>
 
         <!-- EMAIL INPUT -->
         <div id="emailField" class="login-field-wrap">
@@ -3081,11 +3062,26 @@
           <div class="login-err" id="emailErr">Please enter a valid Gmail address.</div>
         </div>
 
-        <!-- PHONE INPUT (hidden, kept for JS compatibility) -->
+        <!-- PHONE INPUT -->
         <div id="phoneField" class="login-field-wrap" style="display:none">
-          <input class="login-input" id="loginPhone" type="tel" style="display:none"/>
-          <select class="login-country" id="countryCode" style="display:none"><option value="+91">+91</option></select>
-          <div class="login-err" id="phoneErr"></div>
+          <label class="login-field-label">Mobile Number</label>
+          <div class="login-input-row">
+            <select class="login-country" id="countryCode">
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+61">🇦🇺 +61</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+65">🇸🇬 +65</option>
+              <option value="+60">🇲🇾 +60</option>
+              <option value="+966">🇸🇦 +966</option>
+            </select>
+            <input class="login-input" id="loginPhone" type="tel"
+              placeholder="9876543210" autocomplete="tel" inputmode="numeric" maxlength="13"
+              oninput="this.value=this.value.replace(/[^0-9]/g,'');clearLoginErr()"
+              onkeydown="if(event.key==='Enter')sendOtp()"/>
+          </div>
+          <div class="login-err" id="phoneErr">Please enter a valid mobile number.</div>
         </div>
 
         <button class="login-btn" id="sendOtpBtn" onclick="sendOtp()">
@@ -4691,7 +4687,6 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
               <div class="pl-detail-meta">${pl.tracks.length} song${pl.tracks.length !== 1 ? 's' : ''}</div>
               <div class="pl-detail-actions">
                 <button class="pl-play-all" onclick="playAll(window._T)">▶ Play All</button>
-                <button class="pl-share-btn" onclick="sharePlaylist('${pl.id}')">🔗 Share</button>
                 <button class="pl-delete-btn" onclick="if(confirm('Delete this playlist?')){deletePlaylist('${pl.id}')}">🗑️</button>
               </div>
             </div>
@@ -4713,10 +4708,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
       c.innerHTML = `<div>
         <div style="padding:20px 20px 14px;display:flex;align-items:center;justify-content:space-between;">
           <div style="font-family:var(--FB);font-size:28px;background:linear-gradient(135deg,#ff3e3e,#ff6b00,#ffaa00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">PLAYLISTS</div>
-          <div style="display:flex;gap:8px">
-            <button style="padding:8px 14px;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.3);border-radius:10px;color:#38bdf8;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--F)" onclick="importPlaylist()">📥 Import</button>
-            <button style="padding:8px 16px;background:linear-gradient(135deg,var(--r),var(--o));border:none;border-radius:10px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--F)" onclick="promptNewPlaylist()">+ New</button>
-          </div>
+          <button style="padding:8px 16px;background:linear-gradient(135deg,var(--r),var(--o));border:none;border-radius:10px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--F)" onclick="promptNewPlaylist()">+ New</button>
         </div>
         <div class="pl-new-btn" onclick="promptNewPlaylist()">
           <span style="font-size:24px">➕</span>
@@ -4777,104 +4769,6 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
       const pl = createPlaylist(name);
       if (pl && window.__addTrack) { addToPlaylist(pl.id, window.__addTrack); }
       if (overlay) overlay.remove();
-    }
-
-    // ── Share Playlist ────────────────────────────────────────────────
-    function sharePlaylist(plId) {
-      const pls = getPlaylists();
-      const pl = pls.find(p => p.id === plId);
-      if (!pl) return;
-
-      // Encode: name + track ids/titles/artists (no audio URLs — those are streaming)
-      const exportData = {
-        v: 1,
-        name: pl.name,
-        tracks: pl.tracks.map(t => ({
-          id: t.id, title: t.title, artist: t.artist,
-          art: t.art || '', dur: t.dur || 0,
-          url: t.url || '', link: t.link || '', full: t.full || false,
-          src: t.src || ''
-        }))
-      };
-      const code = btoa(unescape(encodeURIComponent(JSON.stringify(exportData))));
-      const shareText = `WaveFlow Playlist: ${pl.name}`;
-
-      const overlay = document.createElement('div');
-      overlay.className = 'pl-modal-overlay';
-      overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
-      overlay.innerHTML = `<div class="share-modal-box">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-          <div style="font-size:16px;font-weight:800">🔗 Share Playlist</div>
-          <div onclick="this.closest('.pl-modal-overlay').remove()" style="cursor:pointer;font-size:20px;color:var(--t3);padding:4px 8px">✕</div>
-        </div>
-        <div style="font-size:13px;color:var(--t2);margin-bottom:6px">${esc(pl.name)} · ${pl.tracks.length} song${pl.tracks.length!==1?'s':''}</div>
-
-        <div style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--t3);text-transform:uppercase;margin:16px 0 6px">Share Code</div>
-        <div style="font-size:12px;color:var(--t2);margin-bottom:6px">Copy this code and paste it on another device's WaveFlow → Playlists → 📥 Import</div>
-        <div class="share-code-box" id="shareCodeBox">${code}</div>
-
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-          <button onclick="navigator.clipboard.writeText(document.getElementById('shareCodeBox').textContent).then(()=>toast('📋 Code copied!'))" 
-            style="flex:1;padding:11px;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.3);border-radius:12px;color:#38bdf8;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--F)">
-            📋 Copy Code
-          </button>
-          ${navigator.share ? `<button onclick="navigator.share({title:'${esc(pl.name)} – WaveFlow Playlist',text:'WaveFlow playlist code:\\n'+document.getElementById('shareCodeBox').textContent})" 
-            style="flex:1;padding:11px;background:linear-gradient(135deg,var(--r),var(--o));border:none;border-radius:12px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--F)">
-            ↗ Share
-          </button>` : ''}
-        </div>
-
-        <div style="margin-top:16px;padding:12px 14px;background:rgba(255,170,0,0.07);border:1px solid rgba(255,170,0,0.2);border-radius:12px;font-size:12px;color:var(--t2);line-height:1.6">
-          💡 The other device must also have WaveFlow open. They paste this code via <strong style="color:#fff">📥 Import</strong> in Playlists. Song streaming links are included so playback works immediately.
-        </div>
-      </div>`;
-      document.body.appendChild(overlay);
-    }
-
-    // ── Import Playlist ───────────────────────────────────────────────
-    function importPlaylist() {
-      const overlay = document.createElement('div');
-      overlay.className = 'pl-modal-overlay';
-      overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
-      overlay.innerHTML = `<div class="share-modal-box">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-          <div style="font-size:16px;font-weight:800">📥 Import Playlist</div>
-          <div onclick="this.closest('.pl-modal-overlay').remove()" style="cursor:pointer;font-size:20px;color:var(--t3);padding:4px 8px">✕</div>
-        </div>
-        <div style="font-size:13px;color:var(--t2);margin-bottom:14px">Paste the share code from another WaveFlow device below:</div>
-        <textarea id="importCodeInput" placeholder="Paste share code here…" style="width:100%;min-height:100px;padding:12px 14px;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:13px;color:var(--text);font-size:13px;font-family:var(--FM);outline:none;resize:vertical;transition:border-color 0.2s" onfocus="this.style.borderColor='rgba(56,189,248,0.5)'" onblur="this.style.borderColor=''"></textarea>
-        <div id="importErr" style="font-size:12px;color:#ff5c5c;margin-top:6px;display:none"></div>
-        <button onclick="doImportPlaylist()" style="width:100%;margin-top:12px;padding:13px;background:linear-gradient(135deg,var(--r),var(--o));border:none;border-radius:13px;color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:var(--F)">Import Playlist →</button>
-      </div>`;
-      document.body.appendChild(overlay);
-      setTimeout(() => document.getElementById('importCodeInput')?.focus(), 100);
-    }
-
-    function doImportPlaylist() {
-      const raw = document.getElementById('importCodeInput')?.value?.trim();
-      const errEl = document.getElementById('importErr');
-      if (!raw) { errEl.textContent = 'Please paste a share code.'; errEl.style.display = 'block'; return; }
-      try {
-        const decoded = JSON.parse(decodeURIComponent(escape(atob(raw))));
-        if (!decoded.name || !Array.isArray(decoded.tracks)) throw new Error('bad format');
-
-        const pls = getPlaylists();
-        // Avoid duplicate name — append (Imported) if needed
-        let name = decoded.name;
-        if (pls.find(p => p.name === name)) name = name + ' (Imported)';
-
-        const pl = { id: 'pl_' + Date.now(), name, tracks: decoded.tracks, createdAt: Date.now(), imported: true };
-        pls.unshift(pl);
-        savePlaylists(pls);
-
-        // Close modal
-        document.querySelector('.pl-modal-overlay')?.remove();
-        renderPlaylists();
-        toast(`✅ "${name}" imported — ${decoded.tracks.length} songs!`);
-      } catch(e) {
-        errEl.textContent = 'Invalid code. Make sure you copied it completely.';
-        errEl.style.display = 'block';
-      }
     }
 
     // ══════════════════════════════════════════════════════════════════
