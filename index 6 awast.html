@@ -458,8 +458,8 @@
         display: block;
       }
 
-      /* Reduce topbar right side clutter on small screens — show refresh + last 2 only */
-      .tbr .ib:not(:first-child):not(:last-child):not(:nth-last-child(2)) {
+      /* Reduce topbar right side clutter on small screens */
+      .tbr .ib:not(:last-child):not(:nth-last-child(2)) {
         display: none;
       }
     }
@@ -3776,87 +3776,6 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
 
 
 
-    // ══════════════════════════════════════════════════════════════════
-    //  SOURCE 6 — Stream Search (Invidious public instances)
-    //  Free, no key, full audio streams via open video platform mirrors
-    //  Songs appear as regular tracks — source never shown in UI
-    // ══════════════════════════════════════════════════════════════════
-    const _INV_INSTANCES = [
-      'https://invidious.privacydev.net',
-      'https://inv.nadeko.net',
-      'https://invidious.nerdvpn.de',
-      'https://invidious.fdn.fr',
-      'https://invidious.slipfox.xyz',
-      'https://iv.datura.network',
-    ];
-    let _invIdx = 0;
-
-    async function _invFetch(path) {
-      for (let i = 0; i < _INV_INSTANCES.length; i++) {
-        const base = _INV_INSTANCES[(_invIdx + i) % _INV_INSTANCES.length];
-        try {
-          const r = await Promise.race([
-            fetch(base + path, { headers: { 'Accept': 'application/json' } }),
-            new Promise((_, rej) => setTimeout(rej, 6000))
-          ]);
-          if (r.ok) { _invIdx = (_invIdx + i) % _INV_INSTANCES.length; return await r.json(); }
-        } catch (e) { continue; }
-      }
-      return null;
-    }
-
-    // Get best audio stream URL for a video id
-    async function _invStreamUrl(videoId) {
-      try {
-        const d = await _invFetch(`/api/v1/videos/${videoId}?fields=adaptiveFormats,formatStreams,title,author,lengthSeconds,videoThumbnails`);
-        if (!d) return null;
-        // Prefer audio-only adaptive formats (opus/webm or mp4a)
-        const adaptive = (d.adaptiveFormats || []).filter(f => f.type && f.type.startsWith('audio/'));
-        const best = adaptive.find(f => f.type?.includes('mp4a') && parseInt(f.bitrate||0) >= 128000)
-          || adaptive.find(f => f.type?.includes('opus'))
-          || adaptive[0]
-          || (d.formatStreams || [])[0]; // fallback: combined av stream
-        if (!best?.url) return null;
-        // Get best thumbnail
-        const thumbs = d.videoThumbnails || [];
-        const thumb = (thumbs.find(t => t.quality === 'maxres') || thumbs.find(t => t.quality === 'high') || thumbs[0])?.url || '';
-        return { streamUrl: best.url, thumb, title: d.title, author: d.author, dur: parseInt(d.lengthSeconds || 0) };
-      } catch (e) { return null; }
-    }
-
-    // Search and return tracks via Invidious
-    async function invSearch(q, limit = 15) {
-      const ck = 'inv5_' + q + limit; const cached = cG(ck); if (cached) return cached;
-      try {
-        const d = await _invFetch(`/api/v1/search?q=${encodeURIComponent(q + ' audio')}&type=video&sort_by=relevance&fields=videoId,title,author,lengthSeconds,videoThumbnails`);
-        if (!d || !Array.isArray(d)) return [];
-
-        // Filter: music-likely, skip very short (<60s) or very long (>12min) tracks
-        const candidates = d.filter(v =>
-          v.videoId && v.lengthSeconds > 60 && v.lengthSeconds < 720 &&
-          !/podcast|interview|reaction|live session|full album|mix \d+ hour/i.test(v.title || '')
-        ).slice(0, Math.min(limit, 8)); // cap at 8 to avoid too many stream fetches
-
-        const results = await Promise.all(candidates.map(async v => {
-          const info = await _invStreamUrl(v.videoId);
-          if (!info?.streamUrl) return null;
-          const thumb = (v.videoThumbnails?.find(t => t.quality === 'high') || v.videoThumbnails?.[0])?.url || info.thumb || '';
-          return {
-            id: 'inv_' + v.videoId,
-            title: (info.title || v.title || 'Unknown').replace(/\s*[\[\(].*?[\]\)]/g, '').trim(),
-            artist: info.author || v.author || 'Unknown',
-            album: '', dur: info.dur || parseInt(v.lengthSeconds || 0),
-            art: thumb, url: info.streamUrl,
-            src: 'stream', full: true,
-            link: 'https://music.example.com'
-          };
-        }));
-        const tracks = results.filter(Boolean);
-        if (tracks.length) cS(ck, tracks);
-        return tracks;
-      } catch (e) { return []; }
-    }
-
     // ── Famous artist/query lists ─────────────────────────────────────
     // ── Random helpers — ensure every session shows different songs ──────────────
     const _rp = () => Math.floor(Math.random() * 5) + 1;          // random page 1-5
@@ -3897,13 +3816,12 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
       });
 
       if (mode === 'search') {
-        const [sv1, sv2, sc1, inv1] = await Promise.all([
+        const [sv1, sv2, sc1] = await Promise.all([
           svSearch(q, 40),
           svSearch(q + ' songs', 20),
           scSearch(q, 20),
-          invSearch(q, 10),
         ]);
-        add(sv1); add(sv2); add(sc1); add(inv1);
+        add(sv1); add(sv2); add(sc1);
         if (all.length < 8) { const fb = await jFetch({ search: q, order: 'popularity_week', limit: '20' }); add(fb); }
 
       } else if (mode === 'trending' || mode === 'home') {
@@ -3914,112 +3832,102 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
           `popular songs india ${yr}`, `best hindi ${yr}`, `chart toppers india ${yr}`
         ];
         const pickedQ = _pick(trendQueries, 3);
-        const [sv1, sv2, sv3, sc1, jm1, inv1] = await Promise.all([
+        const [sv1, sv2, sv3, sc1, jm1] = await Promise.all([
           svSearch(pickedQ[0], 40, _rp()),
           svSearch(pickedQ[1], 30, _rp()),
           svSearch(pickedQ[2], 30, _rp()),
           scSearch(`trending india ${yr}`, 20),
           jFetch({ order: 'popularity_week', limit: '30' }),
-          invSearch(`trending hindi songs ${yr}`, 10),
         ]);
-        add(sv1); add(sv2); add(sv3); add(sc1); add(jm1); add(inv1);
+        add(sv1); add(sv2); add(sv3); add(sc1); add(jm1);
         if (all.length < 10) { const fb = await fmaFetch({ sort: 'track_date_recorded', limit: 30 }); add(fb); }
 
       } else if (mode === 'bollywood') {
         const yr = _yr();
         const bollQ = [`bollywood hits ${yr}`, `new hindi songs ${yr}`, `best bollywood songs`, `hindi film songs ${yr}`, `bollywood romantic`, `bollywood party songs`, `hindi love songs ${yr}`, `bollywood dance ${yr}`];
-        const [sv1, sv2, sc1, inv1] = await Promise.all([
+        const [sv1, sv2, sc1] = await Promise.all([
           svMulti(_pick(bollQ, 4), 40),
           svMulti(_pick(IND_BOLLYWOOD, 5), 15),
           scSearch(`bollywood hits ${yr}`, 20),
-          invSearch(`best bollywood songs ${yr}`, 10),
         ]);
-        add(sv1); add(sv2); add(sc1); add(inv1);
+        add(sv1); add(sv2); add(sc1);
 
       } else if (mode === 'punjabi') {
         const yr = _yr();
         const punjQ = [`punjabi songs ${yr}`, `latest punjabi hits`, `punjabi pop ${yr}`, `punjabi party songs`, `new punjabi ${yr}`, `punjabi romantic songs`];
-        const [sv1, sc1, inv1] = await Promise.all([
+        const [sv1, sc1] = await Promise.all([
           svMulti([..._pick(punjQ, 3), ..._pick(IND_PUNJABI, 3)], 25),
           scSearch(`punjabi songs ${yr}`, 20),
-          invSearch(`new punjabi songs ${yr}`, 10),
         ]);
-        add(sv1); add(sc1); add(inv1);
+        add(sv1); add(sc1);
 
       } else if (mode === 'tamil') {
         const yr = _yr();
         const tamQ = [`tamil songs ${yr}`, `kollywood hits ${yr}`, `new tamil songs`, `tamil romantic ${yr}`, `tamil mass songs`, `anirudh songs ${yr}`];
-        const [sv1, sc1, inv1] = await Promise.all([
+        const [sv1, sc1] = await Promise.all([
           svMulti([..._pick(tamQ, 3), ..._pick(IND_TAMIL, 3)], 25),
           scSearch(`tamil songs ${yr}`, 15),
-          invSearch(`new tamil songs ${yr}`, 8),
         ]);
-        add(sv1); add(sc1); add(inv1);
+        add(sv1); add(sc1);
 
       } else if (mode === 'telugu') {
         const yr = _yr();
         const telQ = [`telugu songs ${yr}`, `tollywood hits ${yr}`, `new telugu songs`, `telugu romantic ${yr}`, `telugu mass bgm`];
-        const [sv1, sc1, inv1] = await Promise.all([
+        const [sv1, sc1] = await Promise.all([
           svMulti([..._pick(telQ, 3), ..._pick(IND_TELUGU, 3)], 25),
           scSearch(`telugu songs ${yr}`, 15),
-          invSearch(`new telugu songs ${yr}`, 8),
         ]);
-        add(sv1); add(sc1); add(inv1);
+        add(sv1); add(sc1);
 
       } else if (mode === 'malayalam') {
         const yr = _yr();
         const malQ = [`malayalam songs ${yr}`, `mollywood hits ${yr}`, `new malayalam songs`, `malayalam romantic ${yr}`, `kerala songs ${yr}`, `malayalam film songs`, `mohanlal songs`, `vijay yesudas songs`, `ks harisankar songs`];
-        const [sv1, sc1, inv1] = await Promise.all([
+        const [sv1, sc1] = await Promise.all([
           svMulti(_pick(malQ, 4), 25),
           scSearch(`malayalam songs ${yr}`, 15),
-          invSearch(`new malayalam songs ${yr}`, 8),
         ]);
-        add(sv1); add(sc1); add(inv1);
+        add(sv1); add(sc1);
 
       } else if (mode === 'pop') {
         const yr = _yr();
         const engQ = [`english pop hits ${yr}`, `top pop songs`, `trending english songs india`, `pop hits worldwide ${yr}`, `best pop ${yr}`, `viral pop songs`];
-        const [sv1, sc1, jm1, inv1] = await Promise.all([
+        const [sv1, sc1, jm1] = await Promise.all([
           svMulti([..._pick(engQ, 3), ..._pick(ENG_ARTISTS, 4)], 20),
           scSearch(`pop hits ${yr}`, 20),
           jFetch({ tags: 'pop', order: 'popularity_week', limit: '30' }),
-          invSearch(`top pop hits ${yr}`, 10),
         ]);
-        add(sv1); add(sc1); add(jm1); add(inv1);
+        add(sv1); add(sc1); add(jm1);
 
       } else if (mode === 'hiphop') {
         const yr = _yr();
         const hipQ = [`hip hop ${yr}`, `rap songs hindi`, `badshah rap songs`, `divine rap`, `english rap hits`, `desi hip hop`, `trap music ${yr}`];
-        const [sv1, sc1, jm1, inv1] = await Promise.all([
+        const [sv1, sc1, jm1] = await Promise.all([
           svMulti(_pick(hipQ, 4), 20),
           scSearch(`hip hop rap ${yr}`, 20),
           jFetch({ tags: 'hip-hop', order: 'popularity_week', limit: '30' }),
-          invSearch(`hip hop rap songs ${yr}`, 10),
         ]);
-        add(sv1); add(sc1); add(jm1); add(inv1);
+        add(sv1); add(sc1); add(jm1);
 
       } else if (mode === 'rock') {
         const yr = _yr();
         const rockQ = [`rock songs ${yr}`, `coldplay`, `imagine dragons`, `linkin park`, `rock hits english`, `indie rock ${yr}`, `classic rock`];
-        const [sv1, sc1, jm1, fma1, inv1] = await Promise.all([
+        const [sv1, sc1, jm1, fma1] = await Promise.all([
           svMulti(_pick(rockQ, 4), 20),
           scSearch(`rock hits ${yr}`, 20),
           jFetch({ tags: 'rock', order: 'popularity_week', limit: '30' }),
           fmaFetch({ genre_id: '25', sort: 'track_date_recorded', limit: 20 }),
-          invSearch(`rock hits ${yr}`, 8),
         ]);
-        add(sv1); add(sc1); add(jm1); add(fma1); add(inv1);
+        add(sv1); add(sc1); add(jm1); add(fma1);
 
       } else if (mode === 'lofi') {
         const lofiQ = ['lofi hindi songs', 'lofi beats india', 'chill lofi music', 'study lofi', 'lofi chill beats', 'lofi sleep music', 'lofi concentration'];
-        const [sv1, sc1, jm1, fma1, inv1] = await Promise.all([
+        const [sv1, sc1, jm1, fma1] = await Promise.all([
           svMulti(_pick(lofiQ, 3), 20),
           scSearch('lofi hip hop chill beats', 20),
           jFetch({ tags: 'lofi', order: 'popularity_week', limit: '30' }),
           fmaFetch({ tags: 'lo-fi', limit: 20 }),
-          invSearch('lofi chill beats study music', 8),
         ]);
-        add(sv1); add(sc1); add(jm1); add(fma1); add(inv1);
+        add(sv1); add(sc1); add(jm1); add(fma1);
 
       } else if (mode === 'jazz') {
         const jazzOrders = ['popularity_week', 'popularity_total', 'releasedate'];
@@ -4062,8 +3970,8 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
         add(jm1); add(jm2); add(sc1); add(fma1);
 
       } else {
-        const [sv1, sc1, inv1] = await Promise.all([svSearch(mode, 30), scSearch(mode, 15), invSearch(mode + ' songs', 8)]);
-        add(sv1); add(sc1); add(inv1);
+        const [sv1, sc1] = await Promise.all([svSearch(mode, 30), scSearch(mode, 15)]);
+        add(sv1); add(sc1);
         if (all.length < 5) { const fb = await jFetch({ order: 'popularity_week', limit: '30' }); add(fb); }
       }
 
@@ -4503,24 +4411,8 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
     function playAt(i) { if (!queue.length) return; ci = Math.max(0, Math.min(i, queue.length - 1)); loadTrack(queue[ci]); }
     function loadTrack(t) {
       if (!t?.url) { toast('❌ No audio'); setTimeout(next, 800); return; }
-      curTrack = t;
+      curTrack = t; aud.src = t.url; aud.load();
       recTrack(t); // record for recommendations
-      // For stream source tracks: re-fetch a fresh URL in case it expired
-      if (t.src === 'stream' && t.id && t.id.startsWith('inv_')) {
-        const videoId = t.id.replace('inv_', '');
-        updateUI(t); // show UI immediately
-        _invStreamUrl(videoId).then(info => {
-          if (info?.streamUrl && curTrack?.id === t.id) {
-            aud.src = info.streamUrl;
-            aud.load();
-            aud.play().then(() => { playing = true; updateUI(t); startProg(); }).catch(() => { toast('⚠️ Skipping...'); setTimeout(next, 1000); });
-          } else if (curTrack?.id === t.id) {
-            toast('⚠️ Skipping...'); setTimeout(next, 1000);
-          }
-        }).catch(() => { toast('⚠️ Skipping...'); setTimeout(next, 1000); });
-        return;
-      }
-      aud.src = t.url; aud.load();
       aud.play().then(() => { playing = true; updateUI(t); startProg(); }).catch(() => { toast('⚠️ Skipping...'); setTimeout(next, 1000); });
     }
     function togglePlay() {
