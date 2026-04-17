@@ -458,9 +458,14 @@
         display: block;
       }
 
-      /* Reduce topbar right side clutter on small screens — show refresh + last 2 only */
-      .tbr .ib:not(:first-child):not(:last-child):not(:nth-last-child(2)) {
+      /* On mobile: show only refresh + liked, hide the rest */
+      .tbr .ib-nowplaying,
+      .tbr .ib-owner {
         display: none;
+      }
+      .tbr .ib-refresh,
+      .tbr .ib-liked {
+        display: flex;
       }
     }
 
@@ -3250,11 +3255,11 @@
           <div class="brand">WAVEFLOW</div>
         </div>
         <div class="tbr">
-          <div class="ib" title="Refresh music"
+          <div class="ib ib-refresh" title="Refresh music"
             onclick="Object.keys(_C).forEach(k=>delete _C[k]);renderHome();toast('🔄 Refreshing...')">🔄</div>
-          <div class="ib" onclick="if(queue.length)openFP()">🎵</div>
-          <div class="ib" onclick="bnav('liked')">❤️</div>
-          <div class="ib" onclick="sbNav('owner')" title="About Creator">👤</div>
+          <div class="ib ib-nowplaying" onclick="if(queue.length)openFP()">🎵</div>
+          <div class="ib ib-liked" onclick="bnav('liked')">❤️</div>
+          <div class="ib ib-owner" onclick="sbNav('owner')" title="About Creator">👤</div>
         </div>
       </div>
 
