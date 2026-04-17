@@ -356,7 +356,7 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255,255,255,0.06);
       border: 1px solid var(--border);
       align-items: center;
       justify-content: center;
@@ -365,35 +365,21 @@
       transition: all 0.2s;
       backdrop-filter: blur(10px);
     }
-
-    .hamburger:active {
-      transform: scale(0.88);
-    }
-
-    .hamburger svg {
-      width: 18px;
-      height: 18px;
-      fill: none;
-      stroke: var(--t2);
-      stroke-width: 2;
-      stroke-linecap: round;
-    }
+    .hamburger:active { transform: scale(0.88); }
+    .hamburger svg { width: 18px; height: 18px; fill: none; stroke: var(--t2); stroke-width: 2; stroke-linecap: round; }
 
     /* ── MOBILE DRAWER ── */
     .drawer-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0,0,0,0.6);
       z-index: 200;
       backdrop-filter: blur(4px);
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-
-    .drawer-overlay.open {
-      opacity: 1;
-    }
+    .drawer-overlay.open { opacity: 1; }
 
     .drawer {
       position: fixed;
@@ -401,7 +387,7 @@
       left: 0;
       bottom: 0;
       width: 280px;
-      background: rgba(10, 10, 10, 0.98);
+      background: rgba(10,10,10,0.98);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
@@ -409,13 +395,10 @@
       z-index: 201;
       backdrop-filter: blur(30px);
       transform: translateX(-100%);
-      transition: transform 0.35s cubic-bezier(0.34, 1.1, 0.64, 1);
+      transition: transform 0.35s cubic-bezier(0.34,1.1,0.64,1);
       overflow: hidden;
     }
-
-    .drawer.open {
-      transform: translateX(0);
-    }
+    .drawer.open { transform: translateX(0); }
 
     .drawer-header {
       display: flex;
@@ -425,35 +408,25 @@
       border-bottom: 1px solid var(--border);
       margin-bottom: 8px;
     }
-
     .drawer-brand {
       font-family: var(--FB);
       font-size: 28px;
       letter-spacing: 1px;
-      background: linear-gradient(135deg, #ff3e3e, #ff6b00, #ffaa00);
+      background: linear-gradient(135deg,#ff3e3e,#ff6b00,#ffaa00);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 12px rgba(255, 100, 0, 0.5));
+      filter: drop-shadow(0 0 12px rgba(255,100,0,0.5));
     }
-
     .drawer-close {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.07);
+      background: rgba(255,255,255,0.07);
       border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-      color: var(--t2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px; color: var(--t2);
       transition: all 0.2s;
     }
-
-    .drawer-close:active {
-      transform: scale(0.88);
-    }
+    .drawer-close:active { transform: scale(0.88); }
 
     .drawer-nav {
       flex: 1;
@@ -461,10 +434,7 @@
       scrollbar-width: none;
       padding-bottom: calc(var(--sb) + 80px);
     }
-
-    .drawer-nav::-webkit-scrollbar {
-      display: none;
-    }
+    .drawer-nav::-webkit-scrollbar { display: none; }
 
     /* Mobile: hide sidebar, show bottom nav */
     @media(max-width:768px) {
@@ -493,7 +463,6 @@
       .tbr .ib-owner {
         display: none;
       }
-
       .tbr .ib-refresh,
       .tbr .ib-liked {
         display: flex;
@@ -1881,13 +1850,8 @@
     }
 
     @keyframes ownerOrb {
-      0% {
-        transform: scale(1) translate(0, 0);
-      }
-
-      100% {
-        transform: scale(1.25) translate(-25px, 18px);
-      }
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.25) translate(-25px, 18px); }
     }
 
     .owner-photo-wrap {
@@ -1912,24 +1876,17 @@
       object-position: center top;
       border: 4px solid transparent;
       background: linear-gradient(var(--bg), var(--bg)) padding-box,
-        linear-gradient(135deg, #ff3e3e, #ff6b00, #ffaa00) border-box;
-      box-shadow: 0 0 0 1px rgba(255, 100, 0, 0.15),
-        0 0 60px rgba(255, 100, 0, 0.4),
-        0 24px 60px rgba(0, 0, 0, 0.85);
+                  linear-gradient(135deg, #ff3e3e, #ff6b00, #ffaa00) border-box;
+      box-shadow: 0 0 0 1px rgba(255,100,0,0.15),
+                  0 0 60px rgba(255, 100, 0, 0.4),
+                  0 24px 60px rgba(0, 0, 0, 0.85);
       animation: ownerFloat 4.5s ease-in-out infinite;
       display: block;
     }
 
     @keyframes ownerFloat {
-
-      0%,
-      100% {
-        transform: translateY(0) rotate(0deg);
-      }
-
-      50% {
-        transform: translateY(-10px) rotate(0.5deg);
-      }
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(0.5deg); }
     }
 
     .owner-badge-ring {
@@ -1945,7 +1902,7 @@
       justify-content: center;
       font-size: 15px;
       border: 2.5px solid var(--bg);
-      box-shadow: 0 4px 12px rgba(255, 68, 0, 0.5);
+      box-shadow: 0 4px 12px rgba(255,68,0,0.5);
     }
 
     .owner-info {
@@ -1955,9 +1912,7 @@
     }
 
     @media(min-width: 769px) {
-      .owner-info {
-        max-width: 62%;
-      }
+      .owner-info { max-width: 62%; }
     }
 
     .owner-role {
@@ -1980,7 +1935,7 @@
       font-family: var(--FB);
       font-size: clamp(30px, 7vw, 58px);
       line-height: 0.95;
-      background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.85) 100%);
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.85) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 8px;
@@ -2031,9 +1986,7 @@
     }
 
     @media(min-width: 769px) {
-      .owner-section {
-        padding: 0 28px;
-      }
+      .owner-section { padding: 0 28px; }
     }
 
     .owner-sec-title {
@@ -2072,10 +2025,7 @@
     }
 
     @media(min-width: 769px) {
-      .owner-stats {
-        padding: 0 28px;
-        gap: 14px;
-      }
+      .owner-stats { padding: 0 28px; gap: 14px; }
     }
 
     .owner-stat {
@@ -2088,7 +2038,7 @@
     }
 
     .owner-stat:hover {
-      border-color: rgba(255, 100, 0, 0.25);
+      border-color: rgba(255,100,0,0.25);
     }
 
     .owner-stat-val {
@@ -2171,9 +2121,7 @@
     }
 
     @media(min-width: 500px) {
-      .owner-contact-grid {
-        gap: 12px;
-      }
+      .owner-contact-grid { gap: 12px; }
     }
 
     .owner-contact-item {
@@ -2286,37 +2234,25 @@
         overflow-y: auto;
         scrollbar-width: none;
       }
-
-      .fp::-webkit-scrollbar {
-        display: none;
-      }
+      .fp::-webkit-scrollbar { display: none; }
 
       .fpartw {
         padding: 16px 0 10px;
         display: flex;
         justify-content: center;
       }
-
       .fpartbox {
         width: min(340px, 40vw);
         aspect-ratio: 1;
         max-height: none;
       }
-
-      .fpir,
-      .fpprog,
-      .fpctrl,
-      .fpvol,
-      .fpext {
+      .fpir, .fpprog, .fpctrl, .fpvol, .fpext {
         max-width: 580px;
         margin-left: auto;
         margin-right: auto;
         width: 100%;
       }
-
-      .fptrack {
-        font-size: 26px;
-      }
+      .fptrack { font-size: 26px; }
     }
 
     /* TOAST */
@@ -2407,9 +2343,8 @@
       gap: 16px;
       padding: 0 20px;
     }
-
     .pl-card {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255,255,255,0.04);
       border: 1px solid var(--border);
       border-radius: 18px;
       overflow: hidden;
@@ -2417,13 +2352,7 @@
       transition: all 0.22s;
       position: relative;
     }
-
-    .pl-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255, 100, 0, 0.4);
-      background: rgba(255, 68, 0, 0.07);
-    }
-
+    .pl-card:hover { transform: translateY(-4px); border-color: rgba(255,100,0,0.4); background: rgba(255,68,0,0.07); }
     .pl-card-art {
       width: 100%;
       aspect-ratio: 1;
@@ -2432,18 +2361,8 @@
       gap: 2px;
       background: var(--s3);
     }
-
-    .pl-card-art img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .pl-card-art.single img {
-      grid-column: 1/-1;
-      grid-row: 1/-1;
-    }
-
+    .pl-card-art img { width: 100%; height: 100%; object-fit: cover; }
+    .pl-card-art.single img { grid-column: 1/-1; grid-row: 1/-1; }
     .pl-card-art-empty {
       width: 100%;
       aspect-ratio: 1;
@@ -2453,32 +2372,16 @@
       justify-content: center;
       font-size: 48px;
     }
-
-    .pl-card-info {
-      padding: 10px 12px 12px;
-    }
-
-    .pl-card-name {
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .pl-card-count {
-      font-size: 11px;
-      color: var(--t2);
-      margin-top: 2px;
-    }
-
+    .pl-card-info { padding: 10px 12px 12px; }
+    .pl-card-name { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pl-card-count { font-size: 11px; color: var(--t2); margin-top: 2px; }
     .pl-new-btn {
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 14px 20px;
-      background: rgba(255, 68, 0, 0.07);
-      border: 1.5px dashed rgba(255, 100, 0, 0.35);
+      background: rgba(255,68,0,0.07);
+      border: 1.5px dashed rgba(255,100,0,0.35);
       border-radius: 18px;
       cursor: pointer;
       font-size: 13px;
@@ -2487,11 +2390,7 @@
       margin: 0 20px 20px;
       transition: all 0.2s;
     }
-
-    .pl-new-btn:hover {
-      background: rgba(255, 68, 0, 0.14);
-      border-color: rgba(255, 100, 0, 0.7);
-    }
+    .pl-new-btn:hover { background: rgba(255,68,0,0.14); border-color: rgba(255,100,0,0.7); }
 
     /* Playlist detail view */
     .pl-detail-hero {
@@ -2499,10 +2398,9 @@
       align-items: flex-end;
       gap: 20px;
       padding: 20px 20px 24px;
-      background: linear-gradient(to bottom, rgba(255, 68, 0, 0.12), transparent);
+      background: linear-gradient(to bottom, rgba(255,68,0,0.12), transparent);
       margin-bottom: 8px;
     }
-
     .pl-detail-art {
       width: 120px;
       height: 120px;
@@ -2513,122 +2411,50 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
     }
-
-    .pl-detail-art img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .pl-detail-art.single img {
-      grid-column: 1/-1;
-      grid-row: 1/-1;
-    }
-
-    .pl-detail-info {
-      flex: 1;
-    }
-
-    .pl-detail-label {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: var(--acc);
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .pl-detail-name {
-      font-family: var(--FB);
-      font-size: 28px;
-      line-height: 1.1;
-      margin-bottom: 6px;
-    }
-
-    .pl-detail-meta {
-      font-size: 12px;
-      color: var(--t2);
-    }
-
-    .pl-detail-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 14px;
-      align-items: center;
-    }
-
+    .pl-detail-art img { width: 100%; height: 100%; object-fit: cover; }
+    .pl-detail-art.single img { grid-column: 1/-1; grid-row: 1/-1; }
+    .pl-detail-info { flex: 1; }
+    .pl-detail-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; color: var(--acc); text-transform: uppercase; margin-bottom: 4px; }
+    .pl-detail-name { font-family: var(--FB); font-size: 28px; line-height: 1.1; margin-bottom: 6px; }
+    .pl-detail-meta { font-size: 12px; color: var(--t2); }
+    .pl-detail-actions { display: flex; gap: 10px; margin-top: 14px; align-items: center; }
     .pl-play-all {
-      display: flex;
-      align-items: center;
-      gap: 7px;
+      display: flex; align-items: center; gap: 7px;
       background: linear-gradient(135deg, var(--r), var(--o));
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 9px 18px;
-      border-radius: 11px;
-      border: none;
-      cursor: pointer;
-      font-family: var(--F);
-      box-shadow: 0 6px 20px rgba(255, 68, 0, 0.4);
+      color: #fff; font-size: 13px; font-weight: 700;
+      padding: 9px 18px; border-radius: 11px; border: none;
+      cursor: pointer; font-family: var(--F);
+      box-shadow: 0 6px 20px rgba(255,68,0,0.4);
     }
-
-    .pl-play-all:active {
-      transform: scale(0.93);
-    }
-
+    .pl-play-all:active { transform: scale(0.93); }
     .pl-delete-btn {
-      padding: 9px 14px;
-      border-radius: 11px;
-      background: rgba(255, 62, 62, 0.1);
-      border: 1px solid rgba(255, 62, 62, 0.3);
-      color: var(--r);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: var(--F);
-      transition: all 0.2s;
+      padding: 9px 14px; border-radius: 11px;
+      background: rgba(255,62,62,0.1); border: 1px solid rgba(255,62,62,0.3);
+      color: var(--r); font-size: 13px; font-weight: 700;
+      cursor: pointer; font-family: var(--F); transition: all 0.2s;
     }
-
-    .pl-delete-btn:hover {
-      background: rgba(255, 62, 62, 0.2);
-    }
-
+    .pl-delete-btn:hover { background: rgba(255,62,62,0.2); }
     .pl-share-btn {
-      padding: 9px 14px;
-      border-radius: 11px;
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      color: #38bdf8;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: var(--F);
-      transition: all 0.2s;
+      padding: 9px 14px; border-radius: 11px;
+      background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3);
+      color: #38bdf8; font-size: 13px; font-weight: 700;
+      cursor: pointer; font-family: var(--F); transition: all 0.2s;
     }
-
-    .pl-share-btn:hover {
-      background: rgba(56, 189, 248, 0.2);
-    }
+    .pl-share-btn:hover { background: rgba(56,189,248,0.2); }
 
     /* Share modal */
     .share-modal-box {
-      background: #141414;
-      border-radius: 24px 24px 0 0;
-      border: 1px solid var(--border);
-      border-bottom: none;
+      background: #141414; border-radius: 24px 24px 0 0;
+      border: 1px solid var(--border); border-bottom: none;
       padding: 24px 22px calc(var(--sb) + 24px);
-      width: 100%;
-      max-height: 80vh;
-      overflow-y: auto;
-      animation: slideUp 0.3s cubic-bezier(0.34, 1.1, 0.64, 1);
+      width: 100%; max-height: 80vh; overflow-y: auto;
+      animation: slideUp 0.3s cubic-bezier(0.34,1.1,0.64,1);
     }
-
     .share-code-box {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1.5px solid rgba(56, 189, 248, 0.3);
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(56,189,248,0.3);
       border-radius: 14px;
       padding: 14px 16px;
       font-family: var(--FM);
@@ -2642,88 +2468,36 @@
 
     /* Add to playlist modal */
     .pl-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 500;
-      display: flex;
-      align-items: flex-end;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      z-index: 500; display: flex; align-items: flex-end;
       backdrop-filter: blur(6px);
     }
-
     .pl-modal {
-      background: #141414;
-      border-radius: 24px 24px 0 0;
-      border: 1px solid var(--border);
-      border-bottom: none;
+      background: #141414; border-radius: 24px 24px 0 0;
+      border: 1px solid var(--border); border-bottom: none;
       padding: 20px 20px calc(var(--sb) + 20px);
-      width: 100%;
-      max-height: 70vh;
-      overflow-y: auto;
-      animation: slideUp 0.3s cubic-bezier(0.34, 1.1, 0.64, 1);
+      width: 100%; max-height: 70vh; overflow-y: auto;
+      animation: slideUp 0.3s cubic-bezier(0.34,1.1,0.64,1);
     }
-
-    @keyframes slideUp {
-      from {
-        transform: translateY(100%);
-      }
-
-      to {
-        transform: translateY(0);
-      }
-    }
-
-    .pl-modal-title {
-      font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .pl-modal-title { font-size: 16px; font-weight: 800; margin-bottom: 16px; }
     .pl-modal-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 11px 12px;
-      border-radius: 12px;
-      cursor: pointer;
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 12px; border-radius: 12px; cursor: pointer;
       transition: background 0.15s;
     }
-
-    .pl-modal-item:hover {
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .pl-modal-icon {
-      font-size: 20px;
-      width: 36px;
-      text-align: center;
-    }
-
-    .pl-modal-name {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .pl-modal-count {
-      font-size: 11px;
-      color: var(--t2);
-    }
+    .pl-modal-item:hover { background: rgba(255,255,255,0.06); }
+    .pl-modal-icon { font-size: 20px; width: 36px; text-align: center; }
+    .pl-modal-name { font-size: 14px; font-weight: 600; }
+    .pl-modal-count { font-size: 11px; color: var(--t2); }
 
     /* Track row "add to playlist" button */
     .t-add-pl {
-      font-size: 16px;
-      color: var(--t3);
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 6px;
-      transition: all 0.15s;
-      flex-shrink: 0;
+      font-size: 16px; color: var(--t3); cursor: pointer;
+      padding: 4px 8px; border-radius: 6px;
+      transition: all 0.15s; flex-shrink: 0;
     }
-
-    .t-add-pl:hover {
-      color: var(--acc);
-      background: rgba(255, 68, 0, 0.1);
-    }
+    .t-add-pl:hover { color: var(--acc); background: rgba(255,68,0,0.1); }
 
     /* ── ARTIST STYLES ── */
     .artist-grid {
@@ -2732,160 +2506,74 @@
       gap: 14px;
       padding: 0 20px;
     }
-
     .artist-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: transform 0.2s;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; cursor: pointer; transition: transform 0.2s;
       text-align: center;
     }
-
-    .artist-card:hover {
-      transform: translateY(-4px);
-    }
-
+    .artist-card:hover { transform: translateY(-4px); }
     .artist-avatar {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: var(--s3);
+      width: 110px; height: 110px; border-radius: 50%;
+      overflow: hidden; background: var(--s3);
       border: 3px solid transparent;
       background-clip: padding-box;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.5);
       position: relative;
     }
-
     .artist-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
+      width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
       display: block;
     }
-
     .artist-avatar::before {
-      content: '';
-      position: absolute;
-      inset: -3px;
+      content: ''; position: absolute; inset: -3px;
       border-radius: 50%;
       background: linear-gradient(135deg, #ff3e3e, #ff6b00, #ffaa00);
-      z-index: -1;
-      opacity: 0;
+      z-index: -1; opacity: 0;
       transition: opacity 0.2s;
     }
-
-    .artist-card:hover .artist-avatar::before {
-      opacity: 1;
-    }
-
-    .artist-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .artist-name {
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .artist-genre {
-      font-size: 11px;
-      color: var(--t2);
-    }
+    .artist-card:hover .artist-avatar::before { opacity: 1; }
+    .artist-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .artist-name { font-size: 13px; font-weight: 700; }
+    .artist-genre { font-size: 11px; color: var(--t2); }
 
     /* Artist detail page */
     .artist-hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 28px 20px 20px;
-      text-align: center;
-      background: linear-gradient(to bottom, rgba(255, 68, 0, 0.15), transparent);
+      display: flex; flex-direction: column; align-items: center;
+      padding: 28px 20px 20px; text-align: center;
+      background: linear-gradient(to bottom, rgba(255,68,0,0.15), transparent);
     }
-
     .artist-hero-avatar {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: var(--s3);
+      width: 150px; height: 150px; border-radius: 50%;
+      overflow: hidden; background: var(--s3);
       border: 4px solid transparent;
       background-clip: padding-box;
-      box-shadow: 0 0 60px rgba(255, 100, 0, 0.35), 0 20px 60px rgba(0, 0, 0, 0.8);
-      position: relative;
-      margin-bottom: 16px;
+      box-shadow: 0 0 60px rgba(255,100,0,0.35), 0 20px 60px rgba(0,0,0,0.8);
+      position: relative; margin-bottom: 16px;
     }
-
-    .artist-hero-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .artist-hero-name {
-      font-family: var(--FB);
-      font-size: clamp(28px, 6vw, 48px);
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .artist-hero-genre {
-      font-size: 13px;
-      color: var(--acc);
-      font-weight: 700;
-      margin-bottom: 16px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .artist-hero-btns {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
+    .artist-hero-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .artist-hero-name { font-family: var(--FB); font-size: clamp(28px,6vw,48px); line-height: 1; margin-bottom: 6px; }
+    .artist-hero-genre { font-size: 13px; color: var(--acc); font-weight: 700; margin-bottom: 16px; letter-spacing: 1px; text-transform: uppercase; }
+    .artist-hero-btns { display: flex; gap: 10px; justify-content: center; }
 
     /* Artist search bar */
-    .artist-search-wrap {
-      padding: 0 20px 16px;
-    }
-
+    .artist-search-wrap { padding: 0 20px 16px; }
     .artist-sbox {
-      display: flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.05);
+      display: flex; align-items: center;
+      background: rgba(255,255,255,0.05);
       border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 0 14px;
-      gap: 10px;
+      border-radius: 14px; padding: 0 14px; gap: 10px;
       transition: all 0.25s;
     }
-
     .artist-sbox:focus-within {
-      border-color: rgba(255, 100, 0, 0.6);
-      box-shadow: 0 0 0 3px rgba(255, 100, 0, 0.1);
+      border-color: rgba(255,100,0,0.6);
+      box-shadow: 0 0 0 3px rgba(255,100,0,0.1);
     }
-
     .artist-sbox input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: var(--text);
-      font-size: 14px;
-      font-family: var(--F);
+      flex: 1; background: transparent; border: none; outline: none;
+      color: var(--text); font-size: 14px; font-family: var(--F);
       padding: 12px 0;
     }
-
-    .artist-sbox input::placeholder {
-      color: var(--t3);
-    }
+    .artist-sbox input::placeholder { color: var(--t3); }
 
     /* ══════════════════════════════════════════════════════
        LOGIN / AUTH SCREEN
@@ -2907,18 +2595,15 @@
     }
 
     @keyframes loginOut {
-      to {
-        opacity: 0;
-        transform: scale(1.04);
-      }
+      to { opacity: 0; transform: scale(1.04); }
     }
 
     .login-bg {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 62, 62, 0.18) 0%, transparent 65%),
-        radial-gradient(ellipse 60% 50% at 80% 100%, rgba(168, 85, 247, 0.12) 0%, transparent 60%),
-        #080808;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,62,62,0.18) 0%, transparent 65%),
+                  radial-gradient(ellipse 60% 50% at 80% 100%, rgba(168,85,247,0.12) 0%, transparent 60%),
+                  #080808;
     }
 
     .login-noise {
@@ -2931,78 +2616,53 @@
 
     .login-orb1 {
       position: absolute;
-      width: 500px;
-      height: 500px;
-      top: -180px;
-      left: -120px;
+      width: 500px; height: 500px;
+      top: -180px; left: -120px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 62, 62, 0.2), transparent 70%);
+      background: radial-gradient(circle, rgba(255,62,62,0.2), transparent 70%);
       filter: blur(80px);
       animation: orbDrift1 8s ease-in-out infinite alternate;
     }
 
     .login-orb2 {
       position: absolute;
-      width: 400px;
-      height: 400px;
-      bottom: -120px;
-      right: -100px;
+      width: 400px; height: 400px;
+      bottom: -120px; right: -100px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 107, 0, 0.18), transparent 70%);
+      background: radial-gradient(circle, rgba(255,107,0,0.18), transparent 70%);
       filter: blur(80px);
       animation: orbDrift2 10s ease-in-out infinite alternate;
     }
 
     @keyframes orbDrift1 {
-      from {
-        transform: translate(0, 0) scale(1);
-      }
-
-      to {
-        transform: translate(30px, 20px) scale(1.1);
-      }
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 20px) scale(1.1); }
     }
-
     @keyframes orbDrift2 {
-      from {
-        transform: translate(0, 0) scale(1);
-      }
-
-      to {
-        transform: translate(-20px, -30px) scale(1.15);
-      }
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(-20px, -30px) scale(1.15); }
     }
 
     .login-card {
       position: relative;
       z-index: 2;
       width: min(440px, calc(100vw - 32px));
-      background: rgba(12, 12, 12, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(12,12,12,0.85);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 28px;
       padding: 40px 36px 36px;
       backdrop-filter: blur(30px);
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 100, 0, 0.06);
-      animation: cardIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,100,0,0.06);
+      animation: cardIn 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
     }
 
     @media(max-width: 480px) {
-      .login-card {
-        padding: 32px 22px 28px;
-        border-radius: 24px;
-      }
+      .login-card { padding: 32px 22px 28px; border-radius: 24px; }
     }
 
     @keyframes cardIn {
-      from {
-        opacity: 0;
-        transform: translateY(28px) scale(0.97);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      from { opacity: 0; transform: translateY(28px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .login-logo {
@@ -3012,7 +2672,7 @@
       background: linear-gradient(135deg, #ff3e3e, #ff6b00, #ffaa00);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 20px rgba(255, 100, 0, 0.4));
+      filter: drop-shadow(0 0 20px rgba(255,100,0,0.4));
       text-align: center;
       margin-bottom: 4px;
     }
@@ -3047,7 +2707,7 @@
 
     .login-tabs {
       display: flex;
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255,255,255,0.04);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 4px;
@@ -3076,7 +2736,7 @@
     .login-tab.active {
       background: linear-gradient(135deg, var(--r), var(--o));
       color: #fff;
-      box-shadow: 0 4px 16px rgba(255, 68, 0, 0.35);
+      box-shadow: 0 4px 16px rgba(255,68,0,0.35);
     }
 
     .login-field-wrap {
@@ -3103,7 +2763,7 @@
       width: 72px;
       flex-shrink: 0;
       padding: 0 10px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       border: 1.5px solid var(--border);
       border-radius: 13px;
       color: var(--text);
@@ -3121,7 +2781,7 @@
       flex: 1;
       width: 100%;
       padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       border: 1.5px solid var(--border);
       border-radius: 13px;
       color: var(--text);
@@ -3131,21 +2791,18 @@
       transition: all 0.22s;
     }
 
-    .login-input:focus,
-    .login-country:focus {
-      border-color: rgba(255, 100, 0, 0.6);
-      background: rgba(255, 255, 255, 0.07);
-      box-shadow: 0 0 0 3px rgba(255, 100, 0, 0.1);
+    .login-input:focus, .login-country:focus {
+      border-color: rgba(255,100,0,0.6);
+      background: rgba(255,255,255,0.07);
+      box-shadow: 0 0 0 3px rgba(255,100,0,0.1);
     }
 
-    .login-input::placeholder {
-      color: var(--t3);
-    }
+    .login-input::placeholder { color: var(--t3); }
 
     .login-input.error {
-      border-color: rgba(255, 62, 62, 0.7);
-      background: rgba(255, 62, 62, 0.05);
-      box-shadow: 0 0 0 3px rgba(255, 62, 62, 0.1);
+      border-color: rgba(255,62,62,0.7);
+      background: rgba(255,62,62,0.05);
+      box-shadow: 0 0 0 3px rgba(255,62,62,0.1);
     }
 
     .login-err {
@@ -3156,9 +2813,7 @@
       font-weight: 600;
     }
 
-    .login-err.show {
-      display: block;
-    }
+    .login-err.show { display: block; }
 
     .login-btn {
       width: 100%;
@@ -3173,45 +2828,28 @@
       cursor: pointer;
       margin-top: 8px;
       transition: all 0.22s;
-      box-shadow: 0 8px 28px rgba(255, 68, 0, 0.4);
+      box-shadow: 0 8px 28px rgba(255,68,0,0.4);
       letter-spacing: 0.3px;
       position: relative;
       overflow: hidden;
     }
 
-    .login-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 36px rgba(255, 68, 0, 0.5);
-    }
-
-    .login-btn:active {
-      transform: scale(0.98);
-    }
-
-    .login-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
+    .login-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 36px rgba(255,68,0,0.5); }
+    .login-btn:active { transform: scale(0.98); }
+    .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
     .login-btn-loader {
       display: none;
-      width: 18px;
-      height: 18px;
-      border: 2.5px solid rgba(255, 255, 255, 0.3);
+      width: 18px; height: 18px;
+      border: 2.5px solid rgba(255,255,255,0.3);
       border-top-color: #fff;
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       margin: 0 auto;
     }
 
-    .login-btn.loading .login-btn-text {
-      display: none;
-    }
-
-    .login-btn.loading .login-btn-loader {
-      display: block;
-    }
+    .login-btn.loading .login-btn-text { display: none; }
+    .login-btn.loading .login-btn-loader { display: block; }
 
     /* OTP Grid */
     .otp-grid {
@@ -3222,11 +2860,10 @@
     }
 
     .otp-box {
-      width: 52px;
-      height: 58px;
+      width: 52px; height: 58px;
       border-radius: 14px;
       border: 1.5px solid var(--border);
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       color: var(--text);
       font-size: 22px;
       font-weight: 800;
@@ -3238,26 +2875,19 @@
     }
 
     .otp-box:focus {
-      border-color: rgba(255, 100, 0, 0.6);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 0 3px rgba(255, 100, 0, 0.12);
+      border-color: rgba(255,100,0,0.6);
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 0 0 3px rgba(255,100,0,0.12);
     }
 
     .otp-box.filled {
-      border-color: rgba(255, 100, 0, 0.5);
+      border-color: rgba(255,100,0,0.5);
       color: var(--acc);
     }
 
     @media(max-width: 380px) {
-      .otp-box {
-        width: 44px;
-        height: 52px;
-        font-size: 20px;
-      }
-
-      .otp-grid {
-        gap: 8px;
-      }
+      .otp-box { width: 44px; height: 52px; font-size: 20px; }
+      .otp-grid { gap: 8px; }
     }
 
     .otp-resend {
@@ -3279,10 +2909,7 @@
       transition: opacity 0.2s;
     }
 
-    .otp-resend-btn:disabled {
-      opacity: 0.4;
-      cursor: default;
-    }
+    .otp-resend-btn:disabled { opacity: 0.4; cursor: default; }
 
     .login-divider {
       display: flex;
@@ -3296,8 +2923,7 @@
       text-transform: uppercase;
     }
 
-    .login-divider::before,
-    .login-divider::after {
+    .login-divider::before, .login-divider::after {
       content: '';
       flex: 1;
       height: 1px;
@@ -3307,8 +2933,8 @@
     .login-google-btn {
       width: 100%;
       padding: 13px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid rgba(255,255,255,0.1);
       border-radius: 14px;
       color: var(--text);
       font-size: 14px;
@@ -3323,14 +2949,12 @@
     }
 
     .login-google-btn:hover {
-      background: rgba(255, 255, 255, 0.09);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(255,255,255,0.2);
       transform: translateY(-1px);
     }
 
-    .login-google-btn:active {
-      transform: scale(0.98);
-    }
+    .login-google-btn:active { transform: scale(0.98); }
 
     .login-terms {
       text-align: center;
@@ -3340,15 +2964,11 @@
       line-height: 1.6;
     }
 
-    .login-terms a {
-      color: var(--acc);
-      text-decoration: none;
-    }
+    .login-terms a { color: var(--acc); text-decoration: none; }
 
     /* Success tick */
     .login-success-icon {
-      width: 64px;
-      height: 64px;
+      width: 64px; height: 64px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--r), var(--o));
       display: flex;
@@ -3356,20 +2976,13 @@
       justify-content: center;
       font-size: 28px;
       margin: 0 auto 20px;
-      box-shadow: 0 8px 30px rgba(255, 68, 0, 0.5);
-      animation: successPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      box-shadow: 0 8px 30px rgba(255,68,0,0.5);
+      animation: successPop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
     }
 
     @keyframes successPop {
-      from {
-        transform: scale(0);
-        opacity: 0;
-      }
-
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
     }
 
     /* Step indicator */
@@ -3382,8 +2995,7 @@
     }
 
     .login-step-dot {
-      width: 6px;
-      height: 6px;
+      width: 6px; height: 6px;
       border-radius: 50%;
       background: var(--s3);
       transition: all 0.3s;
@@ -3393,12 +3005,10 @@
       background: linear-gradient(135deg, var(--r), var(--o));
       width: 20px;
       border-radius: 3px;
-      box-shadow: 0 0 8px rgba(255, 68, 0, 0.5);
+      box-shadow: 0 0 8px rgba(255,68,0,0.5);
     }
 
-    .login-step-dot.done {
-      background: var(--acc);
-    }
+    .login-step-dot.done { background: var(--acc); }
 
     /* User avatar pill on app */
     .user-avatar-pill {
@@ -3406,21 +3016,17 @@
       align-items: center;
       gap: 8px;
       padding: 5px 12px 5px 5px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
       border-radius: 30px;
       cursor: pointer;
       transition: all 0.2s;
     }
 
-    .user-avatar-pill:hover {
-      background: rgba(255, 100, 0, 0.1);
-      border-color: rgba(255, 100, 0, 0.3);
-    }
+    .user-avatar-pill:hover { background: rgba(255,100,0,0.1); border-color: rgba(255,100,0,0.3); }
 
     .user-avatar-circle {
-      width: 28px;
-      height: 28px;
+      width: 28px; height: 28px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--r), var(--o));
       display: flex;
@@ -3474,17 +3080,16 @@
         <!-- EMAIL INPUT -->
         <div id="emailField" class="login-field-wrap">
           <label class="login-field-label">Gmail Address</label>
-          <input class="login-input" id="loginEmail" type="email" placeholder="you@gmail.com" autocomplete="email"
-            inputmode="email" oninput="clearLoginErr()" onkeydown="if(event.key==='Enter')sendOtp()" />
+          <input class="login-input" id="loginEmail" type="email"
+            placeholder="you@gmail.com" autocomplete="email" inputmode="email"
+            oninput="clearLoginErr()" onkeydown="if(event.key==='Enter')sendOtp()"/>
           <div class="login-err" id="emailErr">Please enter a valid Gmail address.</div>
         </div>
 
         <!-- PHONE INPUT (hidden, kept for JS compatibility) -->
         <div id="phoneField" class="login-field-wrap" style="display:none">
-          <input class="login-input" id="loginPhone" type="tel" style="display:none" />
-          <select class="login-country" id="countryCode" style="display:none">
-            <option value="+91">+91</option>
-          </select>
+          <input class="login-input" id="loginPhone" type="tel" style="display:none"/>
+          <select class="login-country" id="countryCode" style="display:none"><option value="+91">+91</option></select>
           <div class="login-err" id="phoneErr"></div>
         </div>
 
@@ -3497,15 +3102,11 @@
 
         <button class="login-google-btn" onclick="googleSignIn()">
           <svg width="18" height="18" viewBox="0 0 48 48">
-            <path fill="#EA4335"
-              d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
-            <path fill="#4285F4"
-              d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
-            <path fill="#FBBC05"
-              d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
-            <path fill="#34A853"
-              d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.96 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
-            <path fill="none" d="M0 0h48v48H0z" />
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.96 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            <path fill="none" d="M0 0h48v48H0z"/>
           </svg>
           Continue with Google
         </button>
@@ -3521,18 +3122,12 @@
         <div class="login-step-sub">We sent a 6-digit OTP to <span id="otpTarget">—</span></div>
 
         <div class="otp-grid">
-          <input class="otp-box" id="otp0" maxlength="1" inputmode="numeric" pattern="[0-9]"
-            onkeyup="otpNav(this,0,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(0)" />
-          <input class="otp-box" id="otp1" maxlength="1" inputmode="numeric" pattern="[0-9]"
-            onkeyup="otpNav(this,1,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(1)" />
-          <input class="otp-box" id="otp2" maxlength="1" inputmode="numeric" pattern="[0-9]"
-            onkeyup="otpNav(this,2,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(2)" />
-          <input class="otp-box" id="otp3" maxlength="1" inputmode="numeric" pattern="[0-9]"
-            onkeyup="otpNav(this,3,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(3)" />
-          <input class="otp-box" id="otp4" maxlength="1" inputmode="numeric" pattern="[0-9]"
-            onkeyup="otpNav(this,4,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(4)" />
-          <input class="otp-box" id="otp5" maxlength="1" inputmode="numeric" pattern="[0-9]"
-            onkeyup="otpNav(this,5,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(5)" />
+          <input class="otp-box" id="otp0" maxlength="1" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,0,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(0)"/>
+          <input class="otp-box" id="otp1" maxlength="1" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,1,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(1)"/>
+          <input class="otp-box" id="otp2" maxlength="1" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,2,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(2)"/>
+          <input class="otp-box" id="otp3" maxlength="1" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,3,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(3)"/>
+          <input class="otp-box" id="otp4" maxlength="1" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,4,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(4)"/>
+          <input class="otp-box" id="otp5" maxlength="1" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,5,event)" oninput="this.value=this.value.replace(/[^0-9]/g,'');otpFill(5)"/>
         </div>
 
         <div class="login-err" id="otpErr" style="text-align:center">Incorrect OTP. Please try again.</div>
@@ -3550,9 +3145,7 @@
         </div>
 
         <div style="text-align:center;margin-top:16px">
-          <button onclick="backToStep0()"
-            style="background:none;border:none;color:var(--t2);font-size:13px;cursor:pointer;font-family:var(--F)">←
-            Change contact</button>
+          <button onclick="backToStep0()" style="background:none;border:none;color:var(--t2);font-size:13px;cursor:pointer;font-family:var(--F)">← Change contact</button>
         </div>
       </div>
 
@@ -3580,68 +3173,48 @@
   <!-- MOBILE DRAWER -->
   <div class="drawer" id="drawer">
     <div class="drawer-header">
+      <div class="drawer-brand">WAVEFLOW</div>
       <div class="drawer-close" onclick="closeDrawer()">✕</div>
     </div>
     <nav class="drawer-nav">
-      <div class="sb-item on" id="dsbi-home" onclick="sbNav('home');closeDrawer()"><span class="sb-icon">🏠</span>Home
-      </div>
-      <div class="sb-item" id="dsbi-trending" onclick="sbNav('trending');closeDrawer()"><span
-          class="sb-icon">🔥</span>Trending</div>
-      <div class="sb-item" id="dsbi-search" onclick="sbNav('search');closeDrawer()"><span
-          class="sb-icon">🔍</span>Search</div>
-      <div class="sb-item" id="dsbi-liked" onclick="sbNav('liked');closeDrawer()"><span class="sb-icon">❤️</span>Liked
-        Songs</div>
-      <div class="sb-item" id="dsbi-playlists" onclick="sbNav('playlists');closeDrawer()"><span
-          class="sb-icon">📋</span>Playlists</div>
-      <div class="sb-item" id="dsbi-artists" onclick="sbNav('artists');closeDrawer()"><span
-          class="sb-icon">🎤</span>Artists</div>
-      <div class="sb-item" id="dsbi-offline" onclick="sbNav('offline');closeDrawer()"><span
-          class="sb-icon">📥</span>Offline</div>
-      <div class="sb-item" id="dsbi-updates" onclick="sbNav('updates');closeDrawer()"><span
-          class="sb-icon">🔔</span>Updates</div>
+      <div class="sb-item on" id="dsbi-home" onclick="sbNav('home');closeDrawer()"><span class="sb-icon">🏠</span>Home</div>
+      <div class="sb-item" id="dsbi-trending" onclick="sbNav('trending');closeDrawer()"><span class="sb-icon">🔥</span>Trending</div>
+      <div class="sb-item" id="dsbi-search" onclick="sbNav('search');closeDrawer()"><span class="sb-icon">🔍</span>Search</div>
+      <div class="sb-item" id="dsbi-liked" onclick="sbNav('liked');closeDrawer()"><span class="sb-icon">❤️</span>Liked Songs</div>
+      <div class="sb-item" id="dsbi-playlists" onclick="sbNav('playlists');closeDrawer()"><span class="sb-icon">📋</span>Playlists</div>
+      <div class="sb-item" id="dsbi-artists" onclick="sbNav('artists');closeDrawer()"><span class="sb-icon">🎤</span>Artists</div>
+      <div class="sb-item" id="dsbi-offline" onclick="sbNav('offline');closeDrawer()"><span class="sb-icon">📥</span>Offline</div>
+      <div class="sb-item" id="dsbi-updates" onclick="sbNav('updates');closeDrawer()"><span class="sb-icon">🔔</span>Updates</div>
       <div class="sb-divider"></div>
       <div class="sb-section">Genres</div>
-      <div class="sb-item" id="dsbi-bollywood" onclick="sbNav('bollywood');closeDrawer()"><span
-          class="sb-icon">🎬</span>Bollywood</div>
-      <div class="sb-item" id="dsbi-punjabi" onclick="sbNav('punjabi');closeDrawer()"><span
-          class="sb-icon">🥁</span>Punjabi</div>
-      <div class="sb-item" id="dsbi-tamil" onclick="sbNav('tamil');closeDrawer()"><span class="sb-icon">🎵</span>Tamil
-      </div>
-      <div class="sb-item" id="dsbi-telugu" onclick="sbNav('telugu');closeDrawer()"><span
-          class="sb-icon">🎶</span>Telugu</div>
-      <div class="sb-item" id="dsbi-malayalam" onclick="sbNav('malayalam');closeDrawer()"><span
-          class="sb-icon">🌴</span>Malayalam</div>
+      <div class="sb-item" id="dsbi-bollywood" onclick="sbNav('bollywood');closeDrawer()"><span class="sb-icon">🎬</span>Bollywood</div>
+      <div class="sb-item" id="dsbi-punjabi" onclick="sbNav('punjabi');closeDrawer()"><span class="sb-icon">🥁</span>Punjabi</div>
+      <div class="sb-item" id="dsbi-tamil" onclick="sbNav('tamil');closeDrawer()"><span class="sb-icon">🎵</span>Tamil</div>
+      <div class="sb-item" id="dsbi-telugu" onclick="sbNav('telugu');closeDrawer()"><span class="sb-icon">🎶</span>Telugu</div>
+      <div class="sb-item" id="dsbi-malayalam" onclick="sbNav('malayalam');closeDrawer()"><span class="sb-icon">🌴</span>Malayalam</div>
       <div class="sb-item" id="dsbi-pop" onclick="sbNav('pop');closeDrawer()"><span class="sb-icon">✨</span>Pop</div>
-      <div class="sb-item" id="dsbi-hiphop" onclick="sbNav('hiphop');closeDrawer()"><span
-          class="sb-icon">🎤</span>Hip-Hop</div>
-      <div class="sb-item" id="dsbi-rock" onclick="sbNav('rock');closeDrawer()"><span class="sb-icon">🎸</span>Rock
-      </div>
-      <div class="sb-item" id="dsbi-lofi" onclick="sbNav('lofi');closeDrawer()"><span class="sb-icon">☁️</span>Lo-Fi
-      </div>
-      <div class="sb-item" id="dsbi-jazz" onclick="sbNav('jazz');closeDrawer()"><span class="sb-icon">🎷</span>Jazz
-      </div>
-      <div class="sb-item" id="dsbi-electronic" onclick="sbNav('electronic');closeDrawer()"><span
-          class="sb-icon">🎛</span>Electronic</div>
-      <div class="sb-item" id="dsbi-classical" onclick="sbNav('classical');closeDrawer()"><span
-          class="sb-icon">🎻</span>Classical</div>
-      <div class="sb-item" id="dsbi-ambient" onclick="sbNav('ambient');closeDrawer()"><span
-          class="sb-icon">🌊</span>Ambient</div>
+      <div class="sb-item" id="dsbi-hiphop" onclick="sbNav('hiphop');closeDrawer()"><span class="sb-icon">🎤</span>Hip-Hop</div>
+      <div class="sb-item" id="dsbi-rock" onclick="sbNav('rock');closeDrawer()"><span class="sb-icon">🎸</span>Rock</div>
+      <div class="sb-item" id="dsbi-lofi" onclick="sbNav('lofi');closeDrawer()"><span class="sb-icon">☁️</span>Lo-Fi</div>
+      <div class="sb-item" id="dsbi-jazz" onclick="sbNav('jazz');closeDrawer()"><span class="sb-icon">🎷</span>Jazz</div>
+      <div class="sb-item" id="dsbi-electronic" onclick="sbNav('electronic');closeDrawer()"><span class="sb-icon">🎛</span>Electronic</div>
+      <div class="sb-item" id="dsbi-classical" onclick="sbNav('classical');closeDrawer()"><span class="sb-icon">🎻</span>Classical</div>
+      <div class="sb-item" id="dsbi-ambient" onclick="sbNav('ambient');closeDrawer()"><span class="sb-icon">🌊</span>Ambient</div>
       <div class="sb-divider"></div>
-      <div class="sb-item" id="dsbi-owner" onclick="sbNav('owner');closeDrawer()"><span class="sb-icon">👤</span>About
-        Creator</div>
+      <div class="sb-item" id="dsbi-owner" onclick="sbNav('owner');closeDrawer()"><span class="sb-icon">👤</span>About Creator</div>
     </nav>
   </div>
 
   <div id="app-shell">
     <!-- DESKTOP SIDEBAR -->
     <aside class="sidebar">
+      <div class="sb-brand">WAVEFLOW</div>
       <nav class="sb-nav">
         <div class="sb-item on" id="sbi-home" onclick="sbNav('home')"><span class="sb-icon">🏠</span>Home</div>
         <div class="sb-item" id="sbi-trending" onclick="sbNav('trending')"><span class="sb-icon">🔥</span>Trending</div>
         <div class="sb-item" id="sbi-search" onclick="sbNav('search')"><span class="sb-icon">🔍</span>Search</div>
         <div class="sb-item" id="sbi-liked" onclick="sbNav('liked')"><span class="sb-icon">❤️</span>Liked Songs</div>
-        <div class="sb-item" id="sbi-playlists" onclick="sbNav('playlists')"><span class="sb-icon">📋</span>Playlists
-        </div>
+        <div class="sb-item" id="sbi-playlists" onclick="sbNav('playlists')"><span class="sb-icon">📋</span>Playlists</div>
         <div class="sb-item" id="sbi-artists" onclick="sbNav('artists')"><span class="sb-icon">🎤</span>Artists</div>
         <div class="sb-item" id="sbi-offline" onclick="sbNav('offline')"><span class="sb-icon">📥</span>Offline</div>
         <div class="sb-item" id="sbi-updates" onclick="sbNav('updates')"><span class="sb-icon">🔔</span>Updates</div>
@@ -3677,12 +3250,9 @@
       <div class="topbar">
         <div style="display:flex;align-items:center;gap:10px">
           <div class="hamburger" onclick="openDrawer()" title="Menu">
-            <svg viewBox="0 0 24 24">
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
+            <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </div>
+          <div class="brand">WAVEFLOW</div>
         </div>
         <div class="tbr">
           <div class="ib ib-refresh" title="Refresh music"
@@ -3857,7 +3427,7 @@
       setTimeout(() => { overlay.style.display = 'none'; }, 350);
     }
     // Swipe to close drawer
-    (function () {
+    (function() {
       let startX = 0;
       document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
       document.addEventListener('touchend', e => {
@@ -4247,7 +3817,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
         if (!d) return null;
         // Prefer audio-only adaptive formats (opus/webm or mp4a)
         const adaptive = (d.adaptiveFormats || []).filter(f => f.type && f.type.startsWith('audio/'));
-        const best = adaptive.find(f => f.type?.includes('mp4a') && parseInt(f.bitrate || 0) >= 128000)
+        const best = adaptive.find(f => f.type?.includes('mp4a') && parseInt(f.bitrate||0) >= 128000)
           || adaptive.find(f => f.type?.includes('opus'))
           || adaptive[0]
           || (d.formatStreams || [])[0]; // fallback: combined av stream
@@ -5145,7 +4715,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
         </div>
         ${tracksWithBlob.map((t, i) => `
           <div class="trow" onclick="window._T=window._OFFLINE;playFrom(${i})">
-            <div class="tthumb"><img src="${esc(artU(t, 80))}" onerror="this.src='https://picsum.photos/seed/${i + 200}/80'" loading="lazy" alt=""/></div>
+            <div class="tthumb"><img src="${esc(artU(t, 80))}" onerror="this.src='https://picsum.photos/seed/${i+200}/80'" loading="lazy" alt=""/></div>
             <div class="tinfo">
               <div class="tname">${esc(t.title)}</div>
               <div class="tartist">${esc(t.artist)} · <span style="color:var(--acc);font-size:10px">${t.audioBlob ? '📥 Offline' : '☁️ Stream'}</span></div>
@@ -5208,7 +4778,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
       const cls = size === 'card' ? 'pl-card-art' : 'pl-detail-art';
       if (!imgs.length) return `<div class="pl-card-art-empty">🎵</div>`;
       if (imgs.length === 1) return `<div class="${cls} single"><img src="${esc(imgs[0])}" onerror="this.src='https://picsum.photos/seed/pl1/200'" alt=""/></div>`;
-      return `<div class="${cls}">${imgs.slice(0, 4).map((u, i) => `<img src="${esc(u)}" onerror="this.src='https://picsum.photos/seed/pl${i}/120'" alt=""/>`).join('')}</div>`;
+      return `<div class="${cls}">${imgs.slice(0,4).map((u,i) => `<img src="${esc(u)}" onerror="this.src='https://picsum.photos/seed/pl${i}/120'" alt=""/>`).join('')}</div>`;
     }
 
     function renderPlaylists(detailId = null) {
@@ -5242,7 +4812,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
           <div class="sec">
             ${pl.tracks.length ? pl.tracks.map((t, i) => `
               <div class="trow" onclick="window._T=getPlaylists().find(p=>p.id==='${pl.id}')?.tracks||[];playFrom(${i})">
-                <div class="tthumb"><img src="${esc(artU(t, 80))}" onerror="this.src='https://picsum.photos/seed/${i + 77}/80'" loading="lazy" alt=""/></div>
+                <div class="tthumb"><img src="${esc(artU(t, 80))}" onerror="this.src='https://picsum.photos/seed/${i+77}/80'" loading="lazy" alt=""/></div>
                 <div class="tinfo"><div class="tname">${esc(t.title)}</div><div class="tartist">${esc(t.artist)}</div></div>
                 <div class="tdur">${fmt(t.dur)}</div>
                 <div class="tlike" onclick="event.stopPropagation();removeFromPlaylist('${pl.id}','${esc(t.id)}');renderPlaylists('${pl.id}')" title="Remove">🗑</div>
@@ -5350,7 +4920,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
           <div style="font-size:16px;font-weight:800">🔗 Share Playlist</div>
           <div onclick="this.closest('.pl-modal-overlay').remove()" style="cursor:pointer;font-size:20px;color:var(--t3);padding:4px 8px">✕</div>
         </div>
-        <div style="font-size:13px;color:var(--t2);margin-bottom:6px">${esc(pl.name)} · ${pl.tracks.length} song${pl.tracks.length !== 1 ? 's' : ''}</div>
+        <div style="font-size:13px;color:var(--t2);margin-bottom:6px">${esc(pl.name)} · ${pl.tracks.length} song${pl.tracks.length!==1?'s':''}</div>
 
         <div style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--t3);text-transform:uppercase;margin:16px 0 6px">Share Code</div>
         <div style="font-size:12px;color:var(--t2);margin-bottom:6px">Copy this code and paste it on another device's WaveFlow → Playlists → 📥 Import</div>
@@ -5414,7 +4984,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
         document.querySelector('.pl-modal-overlay')?.remove();
         renderPlaylists();
         toast(`✅ "${name}" imported — ${decoded.tracks.length} songs!`);
-      } catch (e) {
+      } catch(e) {
         errEl.textContent = 'Invalid code. Make sure you copied it completely.';
         errEl.style.display = 'block';
       }
@@ -5469,14 +5039,14 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
           try {
             const r = await Promise.race([
               fetch(`${base}/search/artists?query=${encodeURIComponent(artistName)}&limit=5`),
-              new Promise((_, rej) => setTimeout(rej, 5000))
+              new Promise((_,rej) => setTimeout(rej, 5000))
             ]);
             if (!r.ok) continue;
             const d = await r.json();
             const results = d?.data?.results || d?.results || [];
             const match = results.find(a =>
-              (a.name || '').toLowerCase().includes(artistName.toLowerCase()) ||
-              artistName.toLowerCase().includes((a.name || '').toLowerCase())
+              (a.name||'').toLowerCase().includes(artistName.toLowerCase()) ||
+              artistName.toLowerCase().includes((a.name||'').toLowerCase())
             ) || results[0];
             if (match) {
               const imgs = match.image || match.images || [];
@@ -5488,9 +5058,9 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
               if (url && url.startsWith('http')) return set(url);
             }
             break;
-          } catch (e) { continue; }
+          } catch(e) { continue; }
         }
-      } catch (e) { }
+      } catch(e) {}
 
       // 2. Wikipedia REST summary API — free, CORS-enabled, real photos
       try {
@@ -5500,7 +5070,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
           const slug = q.trim().replace(/ /g, '_');
           const r = await Promise.race([
             fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(slug)}`),
-            new Promise((_, rej) => setTimeout(rej, 5000))
+            new Promise((_,rej) => setTimeout(rej, 5000))
           ]);
           if (!r.ok) continue;
           const d = await r.json();
@@ -5512,14 +5082,14 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
           const img = d?.thumbnail?.source || d?.originalimage?.source;
           if (img && (isMusician || q === artistName)) return set(img);
         }
-      } catch (e) { }
+      } catch(e) {}
 
       // 3. Deezer via allorigins.win proxy — artist portraits
       try {
         const encoded = encodeURIComponent(`https://api.deezer.com/search/artist?q=${encodeURIComponent(artistName)}&limit=1`);
         const r = await Promise.race([
           fetch(`https://api.allorigins.win/get?url=${encoded}`),
-          new Promise((_, rej) => setTimeout(rej, 7000))
+          new Promise((_,rej) => setTimeout(rej, 7000))
         ]);
         if (r.ok) {
           const wrapper = await r.json();
@@ -5529,7 +5099,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
           // Filter out Deezer's blank default image
           if (pic && pic.length > 10 && !pic.endsWith('/artist//')) return set(pic);
         }
-      } catch (e) { }
+      } catch(e) {}
 
       // 4. Fallback: best-matching song art from JioSaavn
       try {
@@ -5538,7 +5108,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
           tr.artist?.toLowerCase().includes(artistName.toLowerCase()) && tr.art?.length > 10
         ) || tracks.find(tr => tr.art?.length > 10);
         if (match) return set(match.art);
-      } catch (e) { }
+      } catch(e) {}
 
       return set('');
     }
@@ -5667,7 +5237,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
 
     // AUDIO EVENTS
     aud.addEventListener('ended', () => {
-      if (repeat) { aud.currentTime = 0; aud.play().catch(() => { }); }
+      if (repeat) { aud.currentTime = 0; aud.play().catch(()=>{}); }
       else { playing = false; next(); }
     });
     aud.addEventListener('pause', () => { playing = false; updateBtns(); });
@@ -5776,7 +5346,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
         window.location.reload();
       }
     });
-
+  
 
     // ══════════════════════════════════════════════════════════════════
     //  WAVEFLOW AUTH — Login with Gmail / Mobile OTP
@@ -5803,7 +5373,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
     }
 
     function getUser() {
-      try { return JSON.parse(localStorage.getItem(AUTH_KEY)); } catch (e) { return null; }
+      try { return JSON.parse(localStorage.getItem(AUTH_KEY)); } catch(e) { return null; }
     }
 
     function saveUser(data) {
@@ -5846,7 +5416,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
     }
 
     function validatePhone(v) {
-      const digits = v.replace(/\D/g, '');
+      const digits = v.replace(/\D/g,'');
       return digits.length >= 7 && digits.length <= 13;
     }
 
@@ -5917,7 +5487,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
 
       // Clear OTP boxes
       for (let i = 0; i < 6; i++) {
-        const b = document.getElementById('otp' + i);
+        const b = document.getElementById('otp'+i);
         b.value = '';
         b.classList.remove('filled');
       }
@@ -5951,7 +5521,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
       // Auto-fill OTP boxes after a short delay
       setTimeout(() => {
         for (let i = 0; i < 6; i++) {
-          const b = document.getElementById('otp' + i);
+          const b = document.getElementById('otp'+i);
           if (b) { b.value = otp[i]; b.classList.add('filled'); }
         }
       }, 600);
@@ -5966,21 +5536,21 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
     // ── OTP box navigation ────────────────────────────────────────────
     function otpNav(el, idx, e) {
       if (e.key === 'Backspace' && !el.value && idx > 0) {
-        document.getElementById('otp' + (idx - 1)).focus();
+        document.getElementById('otp'+(idx-1)).focus();
       } else if (el.value && idx < 5) {
-        document.getElementById('otp' + (idx + 1)).focus();
+        document.getElementById('otp'+(idx+1)).focus();
       }
     }
 
     function otpFill(idx) {
-      const b = document.getElementById('otp' + idx);
+      const b = document.getElementById('otp'+idx);
       b.classList.toggle('filled', b.value.length > 0);
       document.getElementById('otpErr').classList.remove('show');
     }
 
     // ── Verify OTP ────────────────────────────────────────────────────
     function verifyOtp() {
-      const entered = [0, 1, 2, 3, 4, 5].map(i => document.getElementById('otp' + i).value).join('');
+      const entered = [0,1,2,3,4,5].map(i => document.getElementById('otp'+i).value).join('');
 
       if (entered.length < 6) {
         document.getElementById('otpErr').classList.add('show');
@@ -6001,8 +5571,8 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
             : document.getElementById('countryCode').value + document.getElementById('loginPhone').value.trim();
 
           const initials = identifier.includes('@')
-            ? identifier.split('@')[0].slice(0, 2).toUpperCase()
-            : identifier.replace(/\D/g, '').slice(-2);
+            ? identifier.split('@')[0].slice(0,2).toUpperCase()
+            : identifier.replace(/\D/g,'').slice(-2);
 
           const user = {
             id: 'u_' + Date.now(),
@@ -6017,7 +5587,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
           // ❌ Wrong OTP
           document.getElementById('otpErr').classList.add('show');
           for (let i = 0; i < 6; i++) {
-            const b = document.getElementById('otp' + i);
+            const b = document.getElementById('otp'+i);
             b.style.borderColor = 'rgba(255,62,62,0.7)';
             b.style.boxShadow = '0 0 0 3px rgba(255,62,62,0.1)';
             setTimeout(() => { b.style.borderColor = ''; b.style.boxShadow = ''; }, 800);
@@ -6147,7 +5717,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
       pill.onclick = () => showUserMenu(user);
       pill.innerHTML = `
         <div class="user-avatar-circle">${user.initials}</div>
-        <div class="user-avatar-name">${user.identifier.split('@')[0] || user.identifier.replace(/\D/g, '').slice(-4)}</div>
+        <div class="user-avatar-name">${user.identifier.split('@')[0] || user.identifier.replace(/\D/g,'').slice(-4)}</div>
       `;
       tbr.insertBefore(pill, tbr.firstChild);
     }
@@ -6160,10 +5730,10 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
       const overlay = document.createElement('div');
       overlay.id = 'userMenuOverlay';
       overlay.style.cssText = 'position:fixed;inset:0;z-index:999;';
-      overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+      overlay.onclick = e => { if(e.target===overlay) overlay.remove(); };
 
       const shortened = user.identifier.length > 22
-        ? user.identifier.slice(0, 20) + '…'
+        ? user.identifier.slice(0,20) + '…'
         : user.identifier;
 
       overlay.innerHTML = `
@@ -6213,8 +5783,8 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
       document.getElementById('loginStep0').style.display = 'block';
       document.getElementById('loginStep1').style.display = 'none';
       document.getElementById('loginStep2').style.display = 'none';
-      ['dot0', 'dot1', 'dot2'].forEach((id, i) => {
-        document.getElementById(id).classList.remove('active', 'done');
+      ['dot0','dot1','dot2'].forEach((id,i) => {
+        document.getElementById(id).classList.remove('active','done');
       });
       document.getElementById('dot0').classList.add('active');
       // Hide app shell
@@ -6228,7 +5798,7 @@ My goal was simple: create a seamless, clean, and enjoyable listening experience
     // ── Boot: run auth check after DOM ready ──────────────────────────
     checkAuth();
 
-  </script>
+</script>
 </body>
 
 </html>
